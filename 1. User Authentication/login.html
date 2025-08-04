@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <script>
+    function checkLogin() {
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      if (email === "user@example.com" && password === "123456") {
+        alert(" Login Successful!");
+      } else {
+        alert(" Incorrect Email or Password!");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Login</h2>
+  <form onsubmit="checkLogin(); return false;">
+    <label>Email:</label><br>
+    <input type="email" id="email" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" id="password" required><br><br>
+
+    <button type="submit">Login</button>
+  </form>
+  <p><a href="forgot-password.html">Forgot Password?</a></p>
+  <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+</body>
+</html>
