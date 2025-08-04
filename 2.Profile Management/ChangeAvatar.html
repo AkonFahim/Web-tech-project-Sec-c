@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Avatar</title>
+    <h3>Change Your Avatar:</h3>
+</head>
+<body>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+form {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 300px;
+}
+
+h3 {
+    margin: 20px;
+    color: #333;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+</style>
+    
+
+    <form>
+        <input type="file" accept="image/*"><br><br>
+        <input type="submit" value="Set as Profile Picture">
+    </form>
+
+</body>
+</html>
