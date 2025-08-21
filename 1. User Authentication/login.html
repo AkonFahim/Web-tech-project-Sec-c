@@ -89,8 +89,11 @@
 
       if (email === "user@example.com" && password === "123456") {
         alert("Login Successful!");
+        
       } else {
         alert("Incorrect Email or Password!");
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
       }
     }
   </script>
@@ -107,8 +110,8 @@
 
       <button type="submit">Login</button>
     </form>
-    <p><a href="forgot-password.html">Forgot Password?</a></p>
-    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    <p><a href="fp.html">Forgot Password?</a></p>
+    <p>Don't have an account? <a href="singup.html">Sign Up</a></p>
   </div>
 </body>
 </html>

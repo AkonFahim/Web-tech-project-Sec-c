@@ -85,7 +85,7 @@
 <body>
   <div class="container">
     <h2>Forgot Password</h2>
-    <form action="/forgot-password" method="POST" onsubmit="return validateForgot()">
+    <form action="ep.html" method="POST" onsubmit="return validateForgot()">
       <label for="email">Enter your email:</label>
       <input type="email" id="email" name="email" required>
 
@@ -96,11 +96,10 @@
 
   <script>
     function validateForgot() {
-      var email = document.getElementById("email").value.trim();
-      var emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      let email = document.getElementById("email").value.trim();
 
-      if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
+      if (email === "") {
+        alert("Email field cannot be empty.");
         return false;
       }
 
