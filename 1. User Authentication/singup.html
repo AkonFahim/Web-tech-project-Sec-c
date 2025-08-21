@@ -2,50 +2,130 @@
 <html>
 <head>
   <title>Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      float: left;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background: #007BFF;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h2>Sign Up</h2>
-  <form action="/signup" method="POST">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form action="/signup" method="POST" onsubmit="validateSignup(event)">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
 
-    <button type="submit">Register</button>
-  </form>
-  <p>Already have an account? <a href="login.html">Login</a></p>
- <script>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
     function validateSignup(event) {
-      event.preventDefault(); 
+      event.preventDefault();
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value;
 
-      var name = document.getElementById("name").value.trim();
-      var email = document.getElementById("email").value.trim();
-      var password = document.getElementById("password").value;
-
-     
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let atPosition = email.indexOf("@");
+      let dotPosition = email.lastIndexOf(".");
 
       if (name === "") {
         alert("Name is required.");
         return;
       }
 
-      if (!emailPattern.test(email)) {
-        alert(" Invalid email format.");
+      if (atPosition < 1 || dotPosition < atPosition + 2 || dotPosition + 2 >= email.length) {
+        alert("Invalid email format.");
         return;
       }
 
       if (password.length < 6) {
-        alert(" Password must be at least 6 characters.");
+        alert("Password must be at least 6 characters.");
         return;
       }
 
-      alert(" Sign Up Successful!");
-      
+      alert("Sign Up Successful!");
     }
   </script>
 </body>

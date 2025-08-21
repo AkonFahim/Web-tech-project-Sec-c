@@ -2,10 +2,65 @@
 <html>
 <head>
   <title>Email Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    p {
+      font-size: 15px;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      background: #007BFF;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    a:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h2>Email Verification</h2>
-  <p>A verification email has been sent to your email address.</p>
-  <p>Please check your inbox and click the verification link to activate your account.</p>
+  <div class="container">
+    <h2>Email Verification</h2>
+    <p>A verification email has been sent to your <span class="highlight">registered email address</span>.</p>
+    <p>Please check your inbox and click the verification link to activate your account.</p>
+    <a href="login.html">Back to Login</a>
+  </div>
 </body>
 </html>
