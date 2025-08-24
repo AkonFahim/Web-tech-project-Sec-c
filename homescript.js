@@ -5,6 +5,10 @@ const transactionsList = document.getElementById('transactions-list');
 const transactionForm = document.getElementById('transaction-form');
 const resetBtn = document.getElementById('reset-btn');
 const chartCanvas = document.getElementById('chart');
+const exportBtn = document.getElementById('export-btn');
+const exportOptions = document.getElementById('exportOptions');
+const exportPdf = document.getElementById('export-pdf');
+const exportExcel = document.getElementById('export-excel');
 
 let transactions = [];
 
@@ -183,4 +187,199 @@ function init() {
 init();
 
 
+const menuToggle = document.getElementById('menuToggle');
+const headerNav = document.querySelector('.header-nav');
 
+if (menuToggle && headerNav) {
+  menuToggle.addEventListener('click', function() {
+    headerNav.classList.toggle('active');
+    
+    const icon = menuToggle.querySelector('i');
+    if (headerNav.classList.contains('active')) {
+      icon.classList.remove('fa-bars');
+      icon.classList.add('fa-times');
+    } else {
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  });
+  
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.header') && headerNav.classList.contains('active')) {
+      headerNav.classList.remove('active');
+      const icon = menuToggle.querySelector('i');
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  });
+}
+
+
+
+
+
+exportBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  exportOptions.classList.toggle('active');
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#export-btn') && !e.target.closest('.export-options')) {
+    exportOptions.classList.remove('active');
+  }
+});
+// PDF Export functionality
+exportPdf.addEventListener('click', function() {
+  exportOptions.classList.remove('active');
+  
+  if (transactions.length === 0) {
+    alert('No transactions to export!');
+    return;
+  }
+  
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Add title
+  doc.setFontSize(20);
+  doc.text('Financial Transactions Report', 105, 15, { align: 'center' });
+  doc.setFontSize(12);
+  doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 22, { align: 'center' });
+  
+  const amounts = transactions.map(t => t.type === 'income' ? t.amount : -t.amount);
+  const income = amounts.filter(item => item > 0).reduce((acc, item) => acc + item, 0);
+  const expense = amounts.filter(item => item < 0).reduce((acc, item) => acc + item, 0) * -1;
+  const balance = income - expense;
+  
+  doc.setFontSize(14);
+  doc.text('Financial Summary', 14, 35);
+  doc.setFontSize(10);
+  doc.text(`Total Income: $${income.toFixed(2)}`, 14, 45);
+  doc.text(`Total Expenses: $${expense.toFixed(2)}`, 14, 55);
+  doc.text(`Balance: $${balance.toFixed(2)}`, 14, 65);
+  
+  doc.setFontSize(14);
+  doc.text('Transaction Details', 14, 80);
+  
+  doc.setFillColor(67, 97, 238);
+  doc.setTextColor(255, 255, 255);
+  doc.rect(14, 85, 183, 8, 'F');
+  doc.text('Date', 20, 90);
+  doc.text('Description', 60, 90);
+  doc.text('Category', 120, 90);
+  doc.text('Amount', 160, 90);
+  
+  doc.setTextColor(0, 0, 0);
+  let yPosition = 100;
+  
+  transactions.slice().reverse().forEach((transaction, index) => {
+    if (yPosition > 270) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    
+    if (index % 2 === 0) {
+      doc.setFillColor(240, 245, 255);
+      doc.rect(14, yPosition - 5, 183, 8, 'F');
+    }
+    
+    doc.text(transaction.date, 20, yPosition);
+    doc.text(transaction.title, 60, yPosition);
+    doc.text(transaction.category, 120, yPosition);
+    
+    if (transaction.type === 'income') {
+      doc.setTextColor(46, 204, 113);
+      doc.text('+' + formatCurrency(transaction.amount), 160, yPosition);
+    } else {
+      doc.setTextColor(231, 76, 60);
+      doc.text('-' + formatCurrency(transaction.amount), 160, yPosition);
+    }
+    
+    doc.setTextColor(0, 0, 0);
+    yPosition += 10;
+  });
+  
+  doc.save('financial-report.pdf');
+});
+
+// Excel Export functionality
+exportExcel.addEventListener('click', function() {
+  exportOptions.classList.remove('active');
+  
+  if (transactions.length === 0) {
+    alert('No transactions to export!');
+    return;
+  }
+  
+  const worksheetData = [
+    ['Date', 'Description', 'Category', 'Type', 'Amount', 'Status'],
+    ...transactions.map(transaction => [
+      transaction.date,
+      transaction.title,
+      transaction.category,
+      transaction.type,
+      transaction.amount,
+      transaction.type === 'income' ? 'Income' : 'Expense'
+    ])
+  ];
+  
+  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+  
+  if (!worksheet['A1'].s) worksheet['A1'].s = {};
+  if (!worksheet['B1'].s) worksheet['B1'].s = {};
+  if (!worksheet['C1'].s) worksheet['C1'].s = {};
+  if (!worksheet['D1'].s) worksheet['D1'].s = {};
+  if (!worksheet['E1'].s) worksheet['E1'].s = {};
+  if (!worksheet['F1'].s) worksheet['F1'].s = {};
+  
+  const headerStyle = {
+    font: { bold: true, color: { rgb: "FFFFFF" } },
+    fill: { fgColor: { rgb: "4361EE" } }
+  };
+  
+  worksheet['A1'].s = headerStyle;
+  worksheet['B1'].s = headerStyle;
+  worksheet['C1'].s = headerStyle;
+  worksheet['D1'].s = headerStyle;
+  worksheet['E1'].s = headerStyle;
+  worksheet['F1'].s = headerStyle;
+  
+  // Set column widths
+  worksheet['!cols'] = [
+    { wch: 15 },
+    { wch: 25 },
+    { wch: 15 },
+    { wch: 10 },
+    { wch: 12 },
+    { wch: 10 }
+  ];
+  
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Transactions');
+  
+  const amounts = transactions.map(t => t.type === 'income' ? t.amount : -t.amount);
+  const income = amounts.filter(item => item > 0).reduce((acc, item) => acc + item, 0);
+  const expense = amounts.filter(item => item < 0).reduce((acc, item) => acc + item, 0) * -1;
+  const balance = income - expense;
+  
+  const summaryData = [
+    ['Financial Summary', ''],
+    ['Total Income', income],
+    ['Total Expenses', expense],
+    ['Balance', balance],
+    ['', ''],
+    ['Total Transactions', transactions.length],
+    ['Income Transactions', transactions.filter(t => t.type === 'income').length],
+    ['Expense Transactions', transactions.filter(t => t.type === 'expense').length]
+  ];
+  
+  const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+  XLSX.utils.book_append_sheet(workbook, summarySheet, 'Summary');
+  
+  XLSX.writeFile(workbook, 'financial-report.xlsx');
+});
+
+exportOptions.addEventListener('click', function(e) {
+  e.stopPropagation();
+});
