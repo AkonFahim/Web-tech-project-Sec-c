@@ -255,9 +255,9 @@ exportPdf.addEventListener('click', function() {
   doc.setFontSize(14);
   doc.text('Financial Summary', 14, 35);
   doc.setFontSize(10);
-  doc.text(`Total Income: $${income.toFixed(2)}`, 14, 45);
-  doc.text(`Total Expenses: $${expense.toFixed(2)}`, 14, 55);
-  doc.text(`Balance: $${balance.toFixed(2)}`, 14, 65);
+  doc.text(`Total Income: BDT${income.toFixed(2)}`, 14, 45);
+  doc.text(`Total Expenses: BDT${expense.toFixed(2)}`, 14, 55);
+  doc.text(`Balance: BDT${balance.toFixed(2)}`, 14, 65);
   
   doc.setFontSize(14);
   doc.text('Transaction Details', 14, 80);
