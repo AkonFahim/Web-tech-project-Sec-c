@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="homestyle.css">
 </head>
 <body>
-  HOME
+<div class="container">
+
+<header class="header" style="position: sticky; top: 0; z-index: 100; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+  <div class="logo" style="font-size: 1.5rem; font-weight: bold; padding: 12px 16px;">Finance Tracker</div>
+  <nav class="header-nav" style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: center; padding: 8px 0;">
+    <a id="monthly-btn" href="#" style="display: flex; align-items: center; gap: 6px; font-size: 1rem; color: #333; text-decoration: none;">
+      <i class="fas fa-calendar-alt" ></i><span>Monthly</span>
+    </a>
+    <a id="export-btn" href="#" style="display: flex; align-items: center; gap: 6px; font-size: 1rem; color: #333; text-decoration: none;">
+      <i class="fas fa-file-export" ></i><span>Export</span>
+    </a>
+    <a id="profile-btn" href="#" style="display: flex; align-items: center; gap: 6px; font-size: 1rem; color: #333; text-decoration: none;">
+      <i class="fas fa-user-circle" ></i><span>Profile</span>
+    </a>
+    <a id="logout-btn" href="#" style="display: flex; align-items: center; gap: 6px; font-size: 1rem; color: #333; text-decoration: none;">
+      <i class="fas fa-right-from-bracket" ></i><span>Logout</span>
+    </a>
+  </nav>
+</header>
+<style>
+@media (max-width: 600px) {
+  .header-nav {
+    flex-direction: column;
+    gap: 10px !important;
+    padding: 8px 0;
+  }
+  .logo {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2rem !important;
+  }
+}
+</style>
+
+<div class="dashboard">
+
+<div class="card">
+<h2><i class="fas fa-chart-line"></i> Financial Summary</h2>
+<div class="balance-summary">
+<div class="balance-item"><h3>Total Balance</h3><div class="balance-value" id="balance">$0.00</div></div>
+<div class="balance-item"><h3>Total Income</h3><div class="balance-value" id="income">$0.00</div></div>
+<div class="balance-item"><h3>Total Expenses</h3><div class="balance-value" id="expense">$0.00</div></div>
+</div>
+<div class="chart-container"><canvas id="chart"></canvas></div>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-plus-circle"></i> Add Transaction</h2>
+<form id="transaction-form">
+<div class="form-group"><label for="title">Transaction Title</label><input type="text" id="title" class="form-control" placeholder="e.g. Groceries, Salary" required></div>
+<div class="form-group"><label for="amount">Amount (BDT)</label><input type="number" id="amount" class="form-control" placeholder="e.g. 100" min="0" step="0.01" required></div>
+<div class="radio-group">
+<div class="radio-option income-option" data-type="income"><i class="fas fa-arrow-down"></i><div>Income</div></div>
+<div class="radio-option expense-option" data-type="expense"><i class="fas fa-arrow-up"></i><div>Expense</div></div>
+</div>
+<div class="form-group"><label for="category">Category</label>
+<select id="category" class="form-control" required>
+<option value="">Select a category</option>
+<option value="salary">Salary</option><option value="freelance">Freelance</option><option value="investment">Investment</option><option value="food">Food & Dining</option><option value="shopping">Shopping</option><option value="transport">Transportation</option><option value="entertainment">Entertainment</option><option value="utilities">Utilities</option><option value="health">Health & Fitness</option><option value="other">Other</option>
+</select></div>
+<div class="form-group"><label for="date">Date</label><input type="date" id="date" class="form-control" required></div>
+<button type="submit" class="btn"><i class="fas fa-plus"></i> Add Transaction</button>
+</form>
+</div>
+
+</div>
+
+<div class="card">
+<h2><i class="fas fa-history"></i> Recent Transactions</h2>
+<div class="transactions" id="transactions-list"></div>
+</div>
+
+<button class="btn" id="reset-btn">Reset Data</button>
+
+<footer>
+<div id="contactus-btn"> <a  href="contactus.html">Contact US</a></div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="homescript.js"></script>
+</div>
 </body>
 </html>

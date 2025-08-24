@@ -60,9 +60,14 @@ forgotPasswordBtn.addEventListener("click", function() {
 showLoginFromReset.addEventListener("click", function() {
     document.getElementById('resetForm').style.display = 'none';
     document.getElementById('loginform').style.display = 'block';
+    
 });
 
 showLoginFromReset.addEventListener("click", function() {
     document.getElementById('resetForm').style.display = 'none';
     document.querySelector('.loginform').style.display = 'block';
+    document.getElementById('resetEmail').value = '';
+    document.getElementById('resetSuccessMsg').textContent = '';
+    document.getElementById('resetErrorMsg').textContent = '';
+
 });
