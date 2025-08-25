@@ -9,6 +9,8 @@ const exportBtn = document.getElementById('export-btn');
 const exportOptions = document.getElementById('exportOptions');
 const exportPdf = document.getElementById('export-pdf');
 const exportExcel = document.getElementById('export-excel');
+const reportBtn= document.getElementById("report-btn");
+const homebtn= document.getElementById("home-btn");
 
 let transactions = [];
 
@@ -54,7 +56,7 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
-function generateID() {
+  function generateID() {
   return Math.floor(Math.random() * 1e9);
 }
 
@@ -215,6 +217,15 @@ if (menuToggle && headerNav) {
 }
 
 
+reportBtn.addEventListener("click", function()
+  {
+    
+
+  });
+
+  homebtn.addEventListener("click", function() {
+    window.location.href = "home.html";
+});
 
 
 
