@@ -84,8 +84,8 @@
 
   <script>
     function checkLogin() {
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
 
       if (email === "user@example.com" && password === "123456") {
         alert("Login Successful!");
