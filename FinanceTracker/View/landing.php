@@ -97,7 +97,7 @@
       <h3><i class="fas fa-wallet"></i> Finance Tracker </h3>
       <div class="footer-links">
         <a href="#">About Us</a>
-        <a href="#">Contact</a>
+        <a href="contactus.php" id="landing">Contact</a>
         <a href="#">Support</a>
       </div>
       <div class="social-icons">
