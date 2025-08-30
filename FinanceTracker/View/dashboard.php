@@ -25,6 +25,7 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
 ];
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
