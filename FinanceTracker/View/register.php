@@ -28,11 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Email validation function without regex
 function isValidEmail($email) {
+    // Check if email contains @ symbol
     if (strpos($email, '@') === false) {
         return false;
     }
     
+    // Split email into local and domain parts
     $parts = explode('@', $email);
     $localPart = $parts[0];
     $domain = $parts[1];
