@@ -1,6 +1,30 @@
-<?php 
-session_start(); 
+<?php
+session_start();
+
+// Check if user is logged in
+if(!isset($_COOKIE['status']) || $_COOKIE['status'] !== 'true') {
+    header('location: login.php?error=badrequest');
+    exit();
+}
+
+// Check if user email is set in session
+if(!isset($_SESSION['email'])) {
+    header('location: login.php?error=badrequest');
+    exit();
+}
+
+$_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeData'] : [
+    'balance' => 0.0,
+    'totalIncome' => 0.0,
+    'totalExpenses' => 0.0,
+    'transactions' => [],
+    'lastMonthData' => [
+        'income' => 4500,
+        'expenses' => 2750
+    ]
+];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +34,8 @@ session_start();
   <title>Finance Tracker</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link rel="stylesheet" href="../asset/dashboard.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="../asset/dashboard.css">
 
 </head>
 <body class="body-default-style">
@@ -95,7 +119,7 @@ session_start();
 
         <div class="user-profile-container d-flex align-items-center">
           <span class="user-welcome-text me-2 d-none d-md-inline">
-            Welcome, <?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'User'; ?>
+            Welcome, <?php echo isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : 'User'; ?>
           </span>
 
           
@@ -109,184 +133,105 @@ session_start();
 
     <!-- Page Content -->
     <div class="page-content-container">
-      <div id="dashboard-section" class="content-section active-content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Dashboard content</p>
+      <!-- Dashboard Section -->
+      <div id="dashboard-section" class="content-section active-content-section">
+        <div class="dashboard-header">
+          <h2>Financial Dashboard</h2>
+          <p>Overview of your financial health</p>
+        </div>
+        
+        <!-- Summary Cards -->
+         <div class="summary-cards-container">
+          <div class="summary-card">
+              <div class="card-icon savings-icon"><i class="fas fa-piggy-bank"></i></div>
+              <div class="card-content">
+                <div class="card-value" id="balanceDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'] - $_SESSION['financeData']['totalExpenses'], 2); ?></div>
+                <div class="card-label">Balance</div>
+              </div>
+            </div>
+
+        
+          <div class="summary-card">
+            <div class="card-icon income-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="card-content">
+              <div class="card-value" id="totalIncomeDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'], 2); ?></div>
+              <div class="card-label">Total Income</div>
+            </div>
+          </div>
+          
+          <div class="summary-card">
+            <div class="card-icon expenses-icon"><i class="fas fa-credit-card"></i></div>
+            <div class="card-content">
+              <div class="card-value" id="totalExpensesDisplay">$<?php echo number_format($_SESSION['financeData']['totalExpenses'], 2); ?></div>
+              <div class="card-label">Total Expenses</div>
+            </div>
+          </div>
+          
+         
+          
+          <div class="summary-card">
+            <div class="card-icon budget-icon"><i class="fas fa-chart-pie"></i></div>
+            <div class="card-content">
+              <div class="card-value">82%</div>
+              <div class="card-label">Budget Goal Progress</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Charts and Visualizations -->
+        <div class="charts-container">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Income vs Expenses</h3>
+              <select class="chart-period-selector" id="incomeExpensePeriod">
+                <option>Last 7 Days</option>
+                <option selected>Last 30 Days</option>
+                <option>Last 90 Days</option>
+              </select>
+            </div>
+            <canvas id="incomeExpenseChart"></canvas>
+          </div>
+          
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Spending by Category</h3>
+              <select class="chart-period-selector" id="spendingCategoryPeriod">
+                <option>Last 7 Days</option>
+                <option selected>Last 30 Days</option>
+                <option>Last 90 Days</option>
+              </select>
+            </div>
+            <canvas id="spendingCategoryChart"></canvas>
+          </div>
+        </div>
+        
+        <!-- Recent Transactions -->
+        <div class="recent-transactions-container">
+          <div class="section-header">
+            <h3>Recent Transactions</h3>
+            <button class="view-all-button">View All</button>
+          </div>
+          
+          <div class="transactions-list" id="recentTransactionsList">
+            <p class="text-muted text-center py-3">No recent transactions</p>
+          </div>
+        </div>
       </div>
-  </div>
-
-  <div id="income-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-  <h5 class="mb-3">Add Income Source</h5>
-
-  <!-- Income Form -->
-  <form id="incomeForm" class="mb-3 d-flex flex-wrap gap-2">
-    <input type="text" id="incomeSource" class="form-control w-auto" placeholder="Source (e.g. Salary)" required>
-    <input type="number" id="incomeAmount" class="form-control w-auto" placeholder="Amount" required>
-    <button type="submit" class="btn btn-success">Add</button>
-  </form>
-
-  <!-- Income Table -->
-  <h6 class="mb-2">Your Income Sources:</h6>
-  <table class="table table-bordered table-striped" id="incomeTable">
-    <thead class="table-light">
-      <tr>
-        <th>Source</th>
-        <th>Amount (৳)</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Income rows will appear here -->
-    </tbody>
-  </table>
-</div>
-
-
-     <div id="expenses-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-  <h5 class="mb-3">Add Expense</h5>
-
-  <!-- Expense Form -->
-  <form id="expenseForm" class="mb-3 d-flex flex-wrap gap-2">
-    <input type="text" id="expenseSource" class="form-control w-auto" placeholder="Expense Name (e.g. Rent)" required>
-    <input type="number" id="expenseAmount" class="form-control w-auto" placeholder="Amount" required>
-    <button type="submit" class="btn btn-danger">Add</button>
-  </form>
-
-  <!-- Expense Table -->
-  <h6 class="mb-2">Your Expenses:</h6>
-  <table class="table table-bordered table-striped" id="expenseTable">
-    <thead class="table-light">
-      <tr>
-        <th>Expense</th>
-        <th>Amount (৳)</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Expense rows will appear here -->
-    </tbody>
-  </table>
-</div>
-
-
-
-
-
-
-
-     <div id="budget-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-  <h5 class="mb-3">Manage Budgets</h5>
-
-  <!-- Budget Form -->
-  <form id="budgetForm" class="mb-3 d-flex flex-wrap gap-2">
-    <input type="text" id="budgetCategory" class="form-control w-auto" placeholder="Budget Category (e.g. Food)" required>
-    <input type="number" id="budgetAmount" class="form-control w-auto" placeholder="Amount" required>
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
-
-  <!-- Budget Table -->
-  <h6 class="mb-2">Your Budgets:</h6>
-  <table class="table table-bordered table-striped" id="budgetTable">
-    <thead class="table-light">
-      <tr>
-        <th>Category</th>
-        <th>Amount (৳)</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Budget rows will appear here -->
-    </tbody>
-  </table>
-</div>
-
-
-
-
-
-
-
-
-
-
-
+      <div id="income-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
+        <p class="content-text text-muted mb-0">Income content</p>
+      </div>
+      <div id="expenses-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
+        <p class="content-text text-muted mb-0">Expenses content</p>
+      </div>
+      <div id="budget-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
+        <p class="content-text text-muted mb-0">Budget content</p>
+      </div>
       <div id="bill-reminders-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-  <h5 class="mb-3">Bill Reminders</h5>
-
-  <!-- Add Bill Form -->
-  <form id="billForm" class="mb-3 d-flex flex-wrap gap-2">
-    <input type="text" id="billName" class="form-control w-auto" placeholder="Bill Name (e.g. Electricity)" required>
-    <input type="date" id="billDueDate" class="form-control w-auto" required>
-    <label class="form-check-label ms-2">
-      <input type="checkbox" id="autoPay" class="form-check-input"> Auto-Pay
-    </label>
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
-
-  <!-- Bill Table -->
-  <h6 class="mb-2">Your Bills:</h6>
-  <table class="table table-bordered table-striped" id="billTable">
-    <thead class="table-light">
-      <tr>
-        <th>Bill Name</th>
-        <th>Due Date</th>
-        <th>Auto-Pay</th>
-        <th>Alert</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Bill rows will appear here -->
-    </tbody>
-  </table>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-     <div id="reports-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-  <h5 class="mb-3">Reports & Graphs</h5>
-
-  <!-- Date Range Filter -->
-  <form id="reportFilterForm" class="mb-3 d-flex flex-wrap gap-2">
-    <label>From: <input type="date" id="reportStartDate" class="form-control"></label>
-    <label>To: <input type="date" id="reportEndDate" class="form-control"></label>
-    <button type="submit" class="btn btn-primary">Generate</button>
-  </form>
-
-  <!-- Charts -->
-  <div class="mb-4">
-    <h6>Spending Trends</h6>
-    <canvas id="spendingTrendsChart"></canvas>
-  </div>
-
-  <div class="mb-4">
-    <h6>Income vs Expense</h6>
-    <canvas id="incomeExpenseChart"></canvas>
-  </div>
-
-  <div class="mb-4">
-    <h6>Net Worth</h6>
-    <canvas id="netWorthChart"></canvas>
-  </div>
-
-  <button id="exportChartsBtn" class="btn btn-success">Export Charts</button>
-</div>
-
-
-
-
-
-
-
-
+        <p class="content-text text-muted mb-0">Bill Reminders content</p>
+      </div>
+      <div id="reports-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
+        <p class="content-text text-muted mb-0">Reports content</p>
+      </div>
       <div id="savings-goals-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
         <p class="content-text text-muted mb-0">Savings Goals content</p>
       </div>
@@ -302,8 +247,7 @@ session_start();
     </div>
   </div>
 
-  
+  <script src="../asset/dashboard.js"></script >
 
-  <script src="../asset/dashboard.js"></script>
 </body>
 </html>
