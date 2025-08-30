@@ -16,7 +16,8 @@
   <header>
     <h1><i class="fas fa-wallet"></i> Finance Tracker </h1>
     <nav>
-      <a href="#">Home</a>
+      <a href="about.php">About Us</a>
+      <a href="landing.php">Home</a>
       <a href="../view/login.php" class="btn" id="landing-login-btn">Login</a>
     </nav>
   </header>
@@ -96,9 +97,8 @@
     <div class="footer-content">
       <h3><i class="fas fa-wallet"></i> Finance Tracker </h3>
       <div class="footer-links">
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <a href="#">Support</a>
+        <a href="contactus.php">Contact</a>
+        <a href="errors/404.php">Support</a>
       </div>
       <div class="social-icons">
         <a href="#"><i class="fab fa-facebook"></i></a>
