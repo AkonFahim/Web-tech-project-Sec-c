@@ -1,6 +1,64 @@
 <?php
-?>
+session_start();
 
+$err1 = $err2 = $err3 = $err4 = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fullName = trim($_POST['fullName']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confirmPassword = trim($_POST['confirmPassword']);
+    
+    if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
+        $err1 = "Please fill in all fields";
+    } elseif (!isValidEmail($email)) {
+        $err2 = "Please enter a valid email address";
+    } elseif (strlen($password) < 6) {
+        $err3 = "Password must be at least 6 characters";
+    } elseif ($password !== $confirmPassword) {
+        $err4 = "Passwords do not match";
+    } else {
+        $_SESSION['registration_success'] = "Account created successfully! Please login.";
+        header('location: login.php');
+        exit();
+    }
+}
+
+function isValidEmail($email) {
+    if (strpos($email, '@') === false) {
+        return false;
+    }
+    
+    $parts = explode('@', $email);
+    $localPart = $parts[0];
+    $domain = $parts[1];
+    
+    if (empty($localPart) || empty($domain)) {
+        return false;
+    }
+    
+    if (strpos($domain, '.') === false) {
+        return false;
+    }
+    
+    $domainParts = explode('.', $domain);
+    
+    if (count($domainParts) < 2 || empty($domainParts[0]) || empty($domainParts[1])) {
+        return false;
+    }
+    
+    if (strpos($email, ' ') !== false) {
+        return false;
+    }
+    
+    $tld = end($domainParts);
+    if (strlen($tld) < 2) {
+        return false;
+    }
+    
+    return true;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +78,7 @@
     
     <div class="card-container">
       <div class="info-panel">
-        <h2>Why Join Finance Tracker?</h2>
+        <h2>Why Join Finance Tracker?</h2></br>
         <ul>
           <li><i class="fas fa-chart-pie"></i> Track expenses with visual reports</li>
           <li><i class="fas fa-dollar-sign"></i> Create customized budgets</li>
@@ -36,20 +94,20 @@
           <p>Join thousands managing their money smarter</p>
         </div>
         
-        <form id="registerForm">
+        <form method="post" action="register.php" id="registerForm">
           <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" id="fullName" placeholder="Full Name" required>
+            <input type="text" id="fullName" name="fullName" placeholder="Full Name" required value="<?php echo isset($_POST['fullName']) ? htmlspecialchars($_POST['fullName']) : ''; ?>">
           </div>
           
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="Email" id="regEmail" placeholder="Email Address" required>
+            <input type="email" id="regEmail" name="email" placeholder="Email Address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
           </div>
           
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
             <button type="button" class="toggle-password" id="togglePassword">
               <i class="fas fa-eye"></i>
             </button>
@@ -58,13 +116,20 @@
           
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
             <button type="button" class="toggle-password" id="toggleConfirmPassword">
               <i class="fas fa-eye"></i>
             </button>
           </div>
           
-          <div id="errorMessage" class="error-message"></div>
+          <div id="errorMessage" class="error-message">
+            <?php 
+            if (!empty($err1)) echo $err1 . '<br>';
+            if (!empty($err2)) echo $err2 . '<br>';
+            if (!empty($err3)) echo $err3 . '<br>';
+            if (!empty($err4)) echo $err4 . '<br>';
+            ?>
+          </div>
           <div id="successMessage" class="success-message"></div>
           
           <button type="submit" class="btn">Create Account</button>
@@ -89,6 +154,5 @@
   </div>
 
   <script src="../Asset/register.js"></script>
-
 </body>
 </html>
