@@ -28,42 +28,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Email validation function without regex
 function isValidEmail($email) {
-    // Check if email contains @ symbol
     if (strpos($email, '@') === false) {
         return false;
     }
     
-    // Split email into local and domain parts
     $parts = explode('@', $email);
     $localPart = $parts[0];
     $domain = $parts[1];
     
-    // Check if both parts exist
     if (empty($localPart) || empty($domain)) {
         return false;
     }
     
-    // Check if domain contains dot
     if (strpos($domain, '.') === false) {
         return false;
     }
     
-    // Split domain into parts
     $domainParts = explode('.', $domain);
     
-    // Check if domain has at least 2 parts and they're not empty
     if (count($domainParts) < 2 || empty($domainParts[0]) || empty($domainParts[1])) {
         return false;
     }
     
-    // Check for spaces in email
     if (strpos($email, ' ') !== false) {
         return false;
     }
     
-    // Check if TLD is at least 2 characters
     $tld = end($domainParts);
     if (strlen($tld) < 2) {
         return false;
