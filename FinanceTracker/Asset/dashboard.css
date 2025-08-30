@@ -149,21 +149,3 @@
       gap: 10px;
       margin-top: 20px;
     }
-    /* Search Bar Styling */
-.search-container {
-  max-width: 180px;         /* keep it compact */
-}
-
-.search-container input {
-  border-radius: 20px;      /* rounded corners */
-  padding: 5px 12px;        /* nice spacing inside */
-  font-size: 14px;          /* smaller text */
-  border: 1px solid #ddd;   /* light border */
-  transition: all 0.3s ease;
-}
-
-.search-container input:focus {
-  border-color: #0d6efd;    /* bootstrap blue on focus */
-  box-shadow: 0 0 4px rgba(13, 110, 253, 0.25);
-  outline: none;
-}

@@ -156,6 +156,7 @@ document.addEventListener('sectionChanged', function(e) {
     }
 });
 
+// Fallback: Check periodically if income section becomes active
 let incomeCheckInterval = setInterval(function() {
     const incomeSection = document.getElementById('income-section');
     if (incomeSection && incomeSection.classList.contains('active-content-section')) {

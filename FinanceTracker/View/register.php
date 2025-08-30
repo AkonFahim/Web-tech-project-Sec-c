@@ -1,14 +1,17 @@
 <?php
 session_start();
 
+// Initialize error variables
 $err1 = $err2 = $err3 = $err4 = '';
 
+// Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = trim($_POST['fullName']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirmPassword']);
     
+    // Validate fields
     if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
         $err1 = "Please fill in all fields";
     } elseif (!isValidEmail($email)) {
@@ -18,39 +21,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($password !== $confirmPassword) {
         $err4 = "Passwords do not match";
     } else {
+        // All validation passed - process registration
         $_SESSION['registration_success'] = "Account created successfully! Please login.";
         header('location: login.php');
         exit();
     }
 }
 
+// Email validation function without regex
 function isValidEmail($email) {
+    // Check if email contains @ symbol
     if (strpos($email, '@') === false) {
         return false;
     }
     
+    // Split email into local and domain parts
     $parts = explode('@', $email);
     $localPart = $parts[0];
     $domain = $parts[1];
     
+    // Check if both parts exist
     if (empty($localPart) || empty($domain)) {
         return false;
     }
     
+    // Check if domain contains dot
     if (strpos($domain, '.') === false) {
         return false;
     }
     
+    // Split domain into parts
     $domainParts = explode('.', $domain);
     
+    // Check if domain has at least 2 parts and they're not empty
     if (count($domainParts) < 2 || empty($domainParts[0]) || empty($domainParts[1])) {
         return false;
     }
     
+    // Check for spaces in email
     if (strpos($email, ' ') !== false) {
         return false;
     }
     
+    // Check if TLD is at least 2 characters
     $tld = end($domainParts);
     if (strlen($tld) < 2) {
         return false;
