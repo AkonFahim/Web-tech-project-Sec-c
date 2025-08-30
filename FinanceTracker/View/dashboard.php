@@ -25,7 +25,6 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
 ];
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,6 +200,7 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
           </div>
           
           <div class="transactions-list" id="recentTransactionsList">
+            <!-- Transactions will be loaded via JavaScript -->
             <p class="text-muted text-center py-3">No recent transactions</p>
           </div>
         </div>
