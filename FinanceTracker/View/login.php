@@ -1,8 +1,18 @@
 <?php
+session_start();
 
+if(isset($_REQUEST['error'])){
+    $error = $_REQUEST['error'];
+    
+    if($error == "invalid_user"){
+        $err1 = "Please enter a valid email/password!";
+    } elseif($error == "empty_fields") {
+        $err1 = "Please fill in all fields!";
+    } elseif($error == "badrequest"){
+        $err2 = "Please login first!";
+    }
+}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +33,7 @@
     <div class="card-container">
       <div class="info-panel">
         <h2>Welcome Back!</h2>
-        <p>We're glad to see you again. Log in to access your financial dashboard.</p>
+        <p>We're glad to see you again. Log in to access your financial dashboard.</p></br>
         
         <ul>
           <li><i class="fas fa-chart-pie"></i> View your spending analytics</li>
@@ -31,8 +41,6 @@
           <li><i class="fas fa-piggy-bank"></i> Track your savings progress</li>
           <li><i class="fas fa-goal-net"></i> Monitor your financial goals</li>
         </ul>
-        
-        
       </div>
       
       <div class="form-panel">
@@ -41,15 +49,15 @@
           <p>Enter your credentials to continue</p>
         </div>
         
-        <form id="loginForm">
+        <form method="post" action="../Controller/loginCheck.php" id="loginForm">
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" id="loginEmail" placeholder="Email Address" required>
+            <input type="email" id="loginEmail" name="email" placeholder="Email Address" required>
           </div>
           
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" id="loginPassword" placeholder="Password" required>
+            <input type="password" id="loginPassword" name="password" placeholder="Password" required>
             <button type="button" class="toggle-password" id="togglePassword">
               <i class="fas fa-eye"></i>
             </button>
@@ -57,16 +65,19 @@
           
           <div class="remember-forgot">
             <div class="remember">
-              <input type="checkbox" id="remember">
+              <input type="checkbox" id="remember" name="remember">
               <label for="remember">Remember me</label>
             </div>
             <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
           </div>
           
-          <div id="errorMessage" class="error-message"></div>
+          <div id="errorMessage" class="error-message">
+            <?php if(isset($err1)){echo $err1;} ?>
+            <?php if(isset($err2)){echo $err2;} ?>
+          </div>
           <div id="successMessage" class="success-message"></div>
           
-          <button type="submit" class="btn" id="signin-btn">Sign In</button>
+          <button type="submit" name="submit" class="btn" id="signin-btn">Sign In</button>
         </form>
         
         <div class="form-divider"><span>Or</span></div>
@@ -109,8 +120,6 @@
     </div>
   </div>
 
-  <script slot="login.js" src="../Asset/login.js" ></script>
-</body>
-</html>
+  <script src="../Asset/login.js"></script>
 </body>
 </html>
