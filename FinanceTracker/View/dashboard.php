@@ -1,5 +1,28 @@
-<?php 
-session_start(); 
+<?php
+session_start();
+
+// Check if user is logged in
+if(!isset($_COOKIE['status']) || $_COOKIE['status'] !== 'true') {
+    header('location: login.php?error=badrequest');
+    exit();
+}
+
+// Check if user email is set in session
+if(!isset($_SESSION['email'])) {
+    header('location: login.php?error=badrequest');
+    exit();
+}
+
+$_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeData'] : [
+    'balance' => 0.0,
+    'totalIncome' => 0.0,
+    'totalExpenses' => 0.0,
+    'transactions' => [],
+    'lastMonthData' => [
+        'income' => 4500,
+        'expenses' => 2750
+    ]
+];
 ?>
 
 <!DOCTYPE html>
@@ -10,9 +33,9 @@ session_start();
   <title>Finance Tracker</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-<link rel="stylesheet" href="../asset/dashboard.css">
-
+  <link rel="stylesheet" href="../asset/dashboard.css">
+  <link rel="stylesheet" href="dashboardsection.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="body-default-style">
   <div class="overlay-background" id="mobileOverlay"></div>
@@ -90,47 +113,264 @@ session_start();
         </div>
         <div class="user-profile-container d-flex align-items-center">
           <span class="user-welcome-text me-2 d-none d-md-inline">
-            Welcome, <?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'User'; ?>
+            Welcome, <?php echo isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : 'User'; ?>
           </span>
         </div>
       </div>
     </div>
 
     <div class="page-content-container">
-      <div id="dashboard-section" class="content-section active-content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Dashboard content</p>
+      <!-- Dashboard Section -->
+      <div id="dashboard-section" class="content-section active-content-section">
+        <div class="dashboard-header">
+          <h2>Financial Dashboard</h2>
+          <p>Overview of your financial health</p>
+        </div>
+        
+        <!-- Summary Cards -->
+         <div class="summary-cards-container">
+          <div class="summary-card">
+              <div class="card-icon savings-icon"><i class="fas fa-piggy-bank"></i></div>
+              <div class="card-content">
+                <div class="card-value" id="balanceDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'] - $_SESSION['financeData']['totalExpenses'], 2); ?></div>
+                <div class="card-label">Balance</div>
+              </div>
+            </div>
+
+        
+          <div class="summary-card">
+            <div class="card-icon income-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="card-content">
+              <div class="card-value" id="totalIncomeDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'], 2); ?></div>
+              <div class="card-label">Total Income</div>
+            </div>
+          </div>
+          
+          <div class="summary-card">
+            <div class="card-icon expenses-icon"><i class="fas fa-credit-card"></i></div>
+            <div class="card-content">
+              <div class="card-value" id="totalExpensesDisplay">$<?php echo number_format($_SESSION['financeData']['totalExpenses'], 2); ?></div>
+              <div class="card-label">Total Expenses</div>
+            </div>
+          </div>
+          
+         
+          
+          <div class="summary-card">
+            <div class="card-icon budget-icon"><i class="fas fa-chart-pie"></i></div>
+            <div class="card-content">
+              <div class="card-value">82%</div>
+              <div class="card-label">Budget Goal Progress</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Charts and Visualizations -->
+        <div class="charts-container">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Income vs Expenses</h3>
+              <select class="chart-period-selector" id="incomeExpensePeriod">
+                <option>Last 7 Days</option>
+                <option selected>Last 30 Days</option>
+                <option>Last 90 Days</option>
+              </select>
+            </div>
+            <canvas id="incomeExpenseChart"></canvas>
+          </div>
+          
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Spending by Category</h3>
+              <select class="chart-period-selector" id="spendingCategoryPeriod">
+                <option>Last 7 Days</option>
+                <option selected>Last 30 Days</option>
+                <option>Last 90 Days</option>
+              </select>
+            </div>
+            <canvas id="spendingCategoryChart"></canvas>
+          </div>
+        </div>
+        
+        <!-- Recent Transactions -->
+        <div class="recent-transactions-container">
+          <div class="section-header">
+            <h3>Recent Transactions</h3>
+            <button class="view-all-button">View All</button>
+          </div>
+          
+          <div class="transactions-list" id="recentTransactionsList">
+            <p class="text-muted text-center py-3">No recent transactions</p>
+          </div>
+        </div>
       </div>
+
+      <!-- Income Section -->
       <div id="income-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Income content</p>
+        <h4>Income Management</h4>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Add Income</h5>
+              </div>
+              <div class="card-body">
+                <form id="incomeForm">
+                  <div class="mb-3">
+                    <label for="incomeAmount" class="form-label">Amount</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" step="0.01" class="form-control" id="incomeAmount" placeholder="0.00" required>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="incomeDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="incomeDescription" placeholder="Salary, Freelance, etc." required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="incomeCategory" class="form-label">Category</label>
+                    <select class="form-select" id="incomeCategory" required>
+                      <option value="">Select Category</option>
+                      <option value="Salary">Salary</option>
+                      <option value="Freelance">Freelance</option>
+                      <option value="Investment">Investment</option>
+                      <option value="Gift">Gift</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="incomeDate" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="incomeDate" required>
+                  </div>
+                  <button type="button" class="btn btn-success" id="saveIncome">Add Income</button>
+                </form>
+                <div id="incomeMessage" class="py-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Income History</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody id="incomeHistory">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- Expenses Section -->
       <div id="expenses-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Expenses content</p>
+        <h4>Expense Management</h4>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Add Expense</h5>
+              </div>
+              <div class="card-body">
+                <form id="expenseForm">
+                  <div class="mb-3">
+                    <label for="expenseAmount" class="form-label">Amount</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" step="0.01" class="form-control" id="expenseAmount" placeholder="0.00" required>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="expenseDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="expenseDescription" placeholder="Groceries, Rent, etc." required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="expenseCategory" class="form-label">Category</label>
+                    <select class="form-select" id="expenseCategory" required>
+                      <option value="">Select Category</option>
+                      <option value="Food">Food & Dining</option>
+                      <option value="Transportation">Transportation</option>
+                      <option value="Housing">Housing</option>
+                      <option value="Utilities">Utilities</option>
+                      <option value="Entertainment">Entertainment</option>
+                      <option value="Healthcare">Healthcare</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="expenseDate" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="expenseDate" required>
+                  </div>
+                  <button type="button" class="btn btn-danger" id="saveExpense">Add Expense</button>
+                </form>
+                <div id="expenseMessage" class="py-2"></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Expense History</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody id="expenseHistory">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div id="budget-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Budget content</p>
+        <h4>Budget Management</h4>
+        <p class="text-muted">Budget planning and tracking content will be displayed here.</p>
       </div>
+      
       <div id="bill-reminders-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Bill Reminders content</p>
+        <h4>Bill Reminders</h4>
+        <p class="text-muted">Bill reminders and scheduling content will be displayed here.</p>
       </div>
-      <div id="reports-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Reports content</p>
-      </div>
-      <div id="savings-goals-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Savings Goals content</p>
-      </div>
-      <div id="debt-tracking-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Debt Tracking content</p>
-      </div>
-      <div id="tax-categories-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Tax Categories content</p>
-      </div>
-      <div id="settings-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <p class="content-text text-muted mb-0">Settings content</p>
-      </div>
+      
     </div>
   </div>
 
-  <script src="../asset/dashboard.js"></script >
-
+  <script>
+window.financeData = {
+    balance: <?php echo $_SESSION['financeData']['balance']; ?>,
+    totalIncome: <?php echo $_SESSION['financeData']['totalIncome']; ?>,
+    totalExpenses: <?php echo $_SESSION['financeData']['totalExpenses']; ?>,
+    transactions: <?php echo json_encode($_SESSION['financeData']['transactions']); ?>,
+    lastMonthData: <?php echo json_encode($_SESSION['financeData']['lastMonthData']); ?>
+};
+</script>
+  <script src="../asset/dashboard.js"></script>
+  <script src="dashboardsection.js"></script>
+  <script src="incomesection.js"></script>
+  <script src="expensesection.js"></script>
 </body>
 </html>
