@@ -36,6 +36,7 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
   <link rel="stylesheet" href="../asset/dashboard.css">
   <link rel="stylesheet" href="dashboardsection.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
 </head>
 <body class="body-default-style">
   <div class="overlay-background" id="mobileOverlay"></div>
@@ -128,16 +129,15 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
         </div>
         
         <!-- Summary Cards -->
-         <div class="summary-cards-container">
+        <div class="summary-cards-container">
           <div class="summary-card">
-              <div class="card-icon savings-icon"><i class="fas fa-piggy-bank"></i></div>
-              <div class="card-content">
-                <div class="card-value" id="balanceDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'] - $_SESSION['financeData']['totalExpenses'], 2); ?></div>
-                <div class="card-label">Balance</div>
-              </div>
+            <div class="card-icon savings-icon"><i class="fas fa-piggy-bank"></i></div>
+            <div class="card-content">
+              <div class="card-value" id="balanceDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'] - $_SESSION['financeData']['totalExpenses'], 2); ?></div>
+              <div class="card-label">Balance</div>
             </div>
+          </div>
 
-        
           <div class="summary-card">
             <div class="card-icon income-icon"><i class="fas fa-money-bill-wave"></i></div>
             <div class="card-content">
@@ -154,8 +154,6 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
             </div>
           </div>
           
-         
-          
           <div class="summary-card">
             <div class="card-icon budget-icon"><i class="fas fa-chart-pie"></i></div>
             <div class="card-content">
@@ -165,7 +163,7 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
           </div>
         </div>
         
-        <!-- Charts and Visualizations -->
+        <!-- Charts -->
         <div class="charts-container">
           <div class="chart-card">
             <div class="chart-header">
@@ -200,7 +198,6 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
           </div>
           
           <div class="transactions-list" id="recentTransactionsList">
-            <!-- Transactions will be loaded via JavaScript -->
             <p class="text-muted text-center py-3">No recent transactions</p>
           </div>
         </div>
@@ -317,7 +314,6 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
                   <button type="button" class="btn btn-danger" id="saveExpense">Add Expense</button>
                 </form>
                 <div id="expenseMessage" class="py-2"></div>
-
               </div>
             </div>
           </div>
@@ -347,31 +343,113 @@ $_SESSION['financeData'] = isset($_SESSION['financeData']) ? $_SESSION['financeD
         </div>
       </div>
 
+      <!-- ✅ New Budget Section -->
       <div id="budget-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <h4>Budget Management</h4>
-        <p class="text-muted">Budget planning and tracking content will be displayed here.</p>
+        <h5 class="mb-3">Manage Budgets</h5>
+
+        <!-- Budget Form -->
+        <form id="budgetForm" class="mb-3 d-flex flex-wrap gap-2">
+          <input type="text" id="budgetCategory" class="form-control w-auto" placeholder="Budget Category (e.g. Food)" required>
+          <input type="number" id="budgetAmount" class="form-control w-auto" placeholder="Amount" required>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+
+        <!-- Budget Table -->
+        <h6 class="mb-2">Your Budgets:</h6>
+        <table class="table table-bordered table-striped" id="budgetTable">
+          <thead class="table-light">
+            <tr>
+              <th>Category</th>
+              <th>Amount (৳)</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Budget rows will appear here -->
+          </tbody>
+        </table>
       </div>
-      
+
       <div id="bill-reminders-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
-        <h4>Bill Reminders</h4>
-        <p class="text-muted">Bill reminders and scheduling content will be displayed here.</p>
-      </div>
-      
+  <h5 class="mb-3">Bill Reminders</h5>
+
+  <!-- Add Bill Form -->
+  <form id="billForm" class="mb-3 d-flex flex-wrap gap-2">
+    <input type="text" id="billName" class="form-control w-auto" placeholder="Bill Name (e.g. Electricity)" required>
+    <input type="date" id="billDueDate" class="form-control w-auto" required>
+    <label class="form-check-label ms-2">
+      <input type="checkbox" id="autoPay" class="form-check-input"> Auto-Pay
+    </label>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+
+  <!-- Bill Table -->
+  <h6 class="mb-2">Your Bills:</h6>
+  <table class="table table-bordered table-striped" id="billTable">
+    <thead class="table-light">
+      <tr>
+        <th>Bill Name</th>
+        <th>Due Date</th>
+        <th>Auto-Pay</th>
+        <th>Alert</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Bill rows will appear here -->
+    </tbody>
+  </table>
+</div>
+   <div id="reports-section" class="content-section p-3 bg-white rounded-3 shadow-sm">
+  <h5 class="mb-3">Reports & Graphs</h5>
+
+  <!-- Date Range Filter -->
+  <form id="reportFilterForm" class="mb-3 d-flex flex-wrap gap-2">
+    <label>From: <input type="date" id="reportStartDate" class="form-control"></label>
+    <label>To: <input type="date" id="reportEndDate" class="form-control"></label>
+    <button type="submit" class="btn btn-primary">Generate</button>
+  </form>
+
+  <!-- Charts -->
+  <div class="mb-4">
+    <h6>Spending Trends</h6>
+    <canvas id="spendingTrendsChart"></canvas>
+  </div>
+
+  <div class="mb-4">
+    <h6>Income vs Expense</h6>
+    <canvas id="incomeExpenseChart"></canvas>
+  </div>
+
+  <div class="mb-4">
+    <h6>Net Worth</h6>
+    <canvas id="netWorthChart"></canvas>
+  </div>
+
+  <button id="exportChartsBtn" class="btn btn-success">Export Charts</button>
+</div>    
     </div>
   </div>
 
+
+
   <script>
-window.financeData = {
-    balance: <?php echo $_SESSION['financeData']['balance']; ?>,
-    totalIncome: <?php echo $_SESSION['financeData']['totalIncome']; ?>,
-    totalExpenses: <?php echo $_SESSION['financeData']['totalExpenses']; ?>,
-    transactions: <?php echo json_encode($_SESSION['financeData']['transactions']); ?>,
-    lastMonthData: <?php echo json_encode($_SESSION['financeData']['lastMonthData']); ?>
-};
-</script>
+  window.financeData = {
+      balance: <?php echo $_SESSION['financeData']['balance']; ?>,
+      totalIncome: <?php echo $_SESSION['financeData']['totalIncome']; ?>,
+      totalExpenses: <?php echo $_SESSION['financeData']['totalExpenses']; ?>,
+      transactions: <?php echo json_encode($_SESSION['financeData']['transactions']); ?>,
+      lastMonthData: <?php echo json_encode($_SESSION['financeData']['lastMonthData']); ?>
+  };
+  </script>
   <script src="../asset/dashboard.js"></script>
   <script src="dashboardsection.js"></script>
   <script src="incomesection.js"></script>
   <script src="expensesection.js"></script>
+  <script src="budgetsection.js"></script>
+  <script src="billreminderssection.js"></script>
+  <script src="reportsection.js"></script>
+
+
 </body>
 </html>
