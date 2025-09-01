@@ -1,0 +1,233 @@
+/* settingssection.css */
+.finance-settings-section-container {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.finance-settings-section-header {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.finance-settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.finance-settings-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.finance-settings-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-settings-card-header {
+  margin-bottom: 15px;
+}
+
+.finance-settings-card-header h5 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.finance-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finance-settings-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.finance-settings-form-label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.finance-settings-form-input {
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.finance-settings-form-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.finance-saveaccountsettings-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-saveaccountsettings-btn:hover {
+  background-color: #2980b9;
+}
+
+.finance-settings-notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finance-settings-notification-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.finance-settings-notification-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.finance-settings-notification-group p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+  margin-left: 28px;
+}
+
+.finance-savenotificationsettings-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-savenotificationsettings-btn:hover {
+  background-color: #2980b9;
+}
+
+.finance-settings-privacy-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-settings-privacy-container h5 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.finance-settings-privacy-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.finance-settings-privacy-option {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.finance-settings-privacy-option h6 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+}
+
+.finance-settings-privacy-option p {
+  margin: 0 0 15px 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.finance-exportalldata-btn,
+.finance-deleteaccount-btn,
+.finance-setup2fa-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-exportalldata-btn:hover,
+.finance-setup2fa-btn:hover {
+  background-color: #2980b9;
+}
+
+.finance-deleteaccount-btn {
+  background-color: #e74c3c;
+}
+
+.finance-deleteaccount-btn:hover {
+  background-color: #c0392b;
+}
+
+.finance-settings-about-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-settings-about-container h5 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.finance-settings-about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.finance-settings-about-content p {
+  margin: 0;
+  color: #6c757d;
+}
+
+.finance-settings-about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.finance-about-link {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.finance-about-link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,219 @@
+/* taxsection.css */
+.finance-tax-section-container {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.finance-tax-section-header {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.finance-tax-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.finance-tax-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.finance-tax-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-tax-card-header {
+  margin-bottom: 15px;
+}
+
+.finance-tax-card-header h5 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.finance-tax-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.finance-tax-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.finance-tax-summary-label {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.finance-tax-summary-value {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.finance-tax-deductible-chart {
+  height: 200px;
+}
+
+.finance-tax-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finance-tax-setting-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.finance-tax-setting-label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.finance-tax-setting-input {
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.finance-tax-setting-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.finance-savetaxsettings-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-savetaxsettings-btn:hover {
+  background-color: #2980b9;
+}
+
+.finance-tax-categories-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-tax-categories-container h5 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.finance-tax-categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finance-tax-category-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.finance-tax-category-info {
+  flex: 1;
+}
+
+.finance-tax-category-info h6 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+}
+
+.finance-tax-category-info p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.finance-tax-category-amount {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.finance-tax-category-actions {
+  display: flex;
+}
+
+.finance-viewtransactions-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-viewtransactions-btn:hover {
+  background-color: #2980b9;
+}
+
+.finance-tax-export-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-tax-export-container h5 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.finance-tax-export-options {
+  display: flex;
+  gap: 15px;
+}
+
+.finance-exportcsv-btn,
+.finance-exportpdf-btn,
+.finance-exportcpa-btn {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-exportcsv-btn:hover,
+.finance-exportpdf-btn:hover,
+.finance-exportcpa-btn:hover {
+  background-color: #27ae60;
+}
