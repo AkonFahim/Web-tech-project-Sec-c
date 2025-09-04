@@ -1,5 +1,5 @@
 <?php
 
-    header('location: view/landing.php');
+    header('location: View/landing.php');
 
 ?>
