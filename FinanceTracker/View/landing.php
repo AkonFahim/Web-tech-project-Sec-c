@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Finance Tracker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="../asset/landing.css">
+  <link rel="stylesheet" href="../Asset/landing.css">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
     <nav>
       <a href="about.php">About Us</a>
       <a href="landing.php">Home</a>
-      <a href="../view/login.php" class="btn" id="landing-login-btn">Login</a>
+      <a href="../View/login.php" class="btn" id="landing-login-btn">Login</a>
     </nav>
   </header>
 
@@ -26,7 +26,7 @@
     <div class="Large-content">
       <h2>Take Control of Your Financial Future</h2>
       <p>Track expenses, create budgets, and achieve your financial goals with our intuitive platform</p>
-      <a href="../view/login.php" class="btn" id="getStarted-btn">Get Started For Free</a>
+      <a href="../View/login.php" class="btn" id="getStarted-btn">Get Started For Free</a>
     </div>
   
   </section>
@@ -88,7 +88,7 @@
   <section class="register">
     <h2>Ready to Transform Your Financial Life?</h2>
     <p>Join thousands of users who have taken control of their finances with Finance Tracker </p>
-    <a href="../view/register.php" class="btn" id="landing-register-btn">Create Your Account</a>
+    <a href="../View/register.php" class="btn" id="landing-register-btn">Create Your Account</a>
   </section>
 
   <footer>
@@ -110,7 +110,7 @@
     </div>
   </footer>
 
-  <script src="../asset/landing.js"></script>
+  <script src="../Asset/landing.js"></script>
   
 
 </body>
