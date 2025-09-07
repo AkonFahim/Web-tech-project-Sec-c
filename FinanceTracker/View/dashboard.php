@@ -619,72 +619,7 @@ mysqli_close($con);
 
 
       <!-- Debt Tracking Section -->
-    </div>div id="debt-tracking-section" class="finance-content-section">
-    <div class="finance-debt-section-container">
-        <h4 class="finance-debt-section-header">Debt Tracking</h4>
-        <div class="finance-debt-content">
-            <div class="finance-debt-cards-container">
-                <div class="finance-debt-card">
-                    <div class="finance-debt-card-header">
-                        <h5>Add New Debt</h5>
-                    </div>
-                    <div class="finance-debt-form">
-                        <div class="finance-debt-form-group">
-                            <label class="finance-debt-form-label">Debt Name</label>
-                            <input type="text" class="finance-debt-form-input" placeholder="e.g., Credit Card">
-                        </div>
-                        <div class="finance-debt-form-group">
-                            <label class="finance-debt-form-label">Initial Amount</label>
-                            <div class="finance-debt-input-group">
-                                <span class="finance-debt-input-prefix">$</span>
-                                <input type="number" step="0.01" class="finance-debt-form-input" placeholder="0.00">
-                            </div>
-                        </div>
-                        <div class="finance-debt-form-group">
-                            <label class="finance-debt-form-label">Current Balance</label>
-                            <div class="finance-debt-input-group">
-                                <span class="finance-debt-input-prefix">$</span>
-                                <input type="number" step="0.01" class="finance-debt-form-input" placeholder="0.00">
-                            </div>
-                        </div>
-                        <div class="finance-debt-form-group">
-                            <label class="finance-debt-form-label">Interest Rate</label>
-                            <div class="finance-debt-input-group">
-                                <input type="number" step="0.01" class="finance-debt-form-input" placeholder="0.00">
-                                <span class="finance-debt-input-suffix">%</span>
-                            </div>
-                        </div>
-                        <div class="finance-debt-form-group">
-                            <label class="finance-debt-form-label">Minimum Payment</label>
-                            <div class="finance-debt-input-group">
-                                <span class="finance-debt-input-prefix">$</span>
-                                <input type="number" step="0.01" class="finance-debt-form-input" placeholder="0.00">
-                            </div>
-                        </div>
-                        <button class="finance-adddebt-btn">Add Debt</button>
-                    </div>
-                </div>
-
-                <div class="finance-debt-card">
-                    <div class="finance-debt-card-header">
-                        <h5>Debt Summary</h5>
-                    </div>
-                    <div class="finance-debt-summary">
-                        </div>
-                    <div class="finance-debt-payoff-chart">
-                        <canvas id="debtPayoffChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="finance-debt-list-container">
-                <h5>Your Debts</h5>
-                <div class="finance-debt-list">
-                    </div>
-            </div>
-        </div>
-    </div>
-</div>
+   
 
      <!-- Tax Categories Section -->
 <div id="tax-categories-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
