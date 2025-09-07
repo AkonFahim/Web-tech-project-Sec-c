@@ -244,7 +244,7 @@ mysqli_close($con);
           </div>
         </div>
       </div>
-
+ <!-- income section -->
        <div id="income-section" class="finance-content-section">
         <div class="finance-income-section-container">
           <h4 class="finance-income-section-header">Income Management</h4>
@@ -317,14 +317,79 @@ mysqli_close($con);
       </div>
 
 
-      <!-- Expenses Section -->
+    <!-- Expenses Section -->
       <div id="expenses-section" class="finance-content-section">
         <div class="finance-expense-section-container">
           <h4 class="finance-expense-section-header">Expense Management</h4>
-          <!-- income section code -->
+          <div class="finance-expense-form-container">
+            <div class="finance-expense-form-column">
+              <div class="finance-expense-form-card">
+                <div class="finance-expense-form-card-header">
+                  <h5>Add Expense</h5>
+                </div>
+                <div class="finance-expense-form-card-body">
+                  <form id="expenseForm">
+                    <div class="finance-expense-form-group">
+                      <label for="expenseAmount" class="finance-expense-form-label">Amount</label>
+                      <div class="finance-expense-input-group">
+                        <span class="finance-expense-input-prefix">$</span>
+                        <input type="number" step="0.01" class="finance-expense-form-input" id="expenseAmount" placeholder="0.00" required>
+                      </div>
+                    </div>
+                    <div class="finance-expense-form-group">
+                      <label for="expenseDescription" class="finance-expense-form-label">Description</label>
+                      <input type="text" class="finance-expense-form-input" id="expenseDescription" placeholder="Groceries, Rent, etc." required>
+                    </div>
+                    <div class="finance-expense-form-group">
+                      <label for="expenseCategory" class="finance-expense-form-label">Category</label>
+                      <select class="finance-expense-form-input" id="expenseCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Food">Food & Dining</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="finance-expense-form-group">
+                      <label for="expenseDate" class="finance-expense-form-label">Date</label>
+                      <input type="date" class="finance-expense-form-input" id="expenseDate" required>
+                    </div>
+                    <button type="button" class="finance-addexpense-btn" id="saveExpense">Add Expense</button>
+                  </form>
+                  <div id="expenseMessage" class="finance-expense-message"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="finance-expense-form-column">
+              <div class="finance-expense-form-card">
+                <div class="finance-expense-form-card-header">
+                  <h5>Expense History</h5>
+                </div>
+                <div class="finance-expense-form-card-body">
+                  <div class="finance-expense-history-table-container">
+                    <table class="finance-expense-history-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Description</th>
+                          <th>Category</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody id="expenseHistory">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
 
 
       <!-- Budget Section -->
