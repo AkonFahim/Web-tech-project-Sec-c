@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. In-memory array to store debt objects. Data will not persist on page refresh.
+
     const debts = [];
 
     // 2. Select necessary DOM elements for the form and display areas
