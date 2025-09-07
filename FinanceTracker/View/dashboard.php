@@ -391,14 +391,64 @@ mysqli_close($con);
         </div>
       </div>
 
+ <!-- Budget Section -->
+       <div id="budget-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+    <div class="finance-budget-section-container">
+        <h4 class="finance-budget-section-header" style="color: #343a40; margin-bottom: 2rem; font-weight: 700;">Budget Management</h4>
+        
+        <div class="finance-budget-cards-container" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+            <div class="finance-budget-card" style="flex: 1; min-width: 300px; background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <div class="finance-budget-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h5 style="font-weight: 600; color: #007bff; margin: 0;">Monthly Budget</h5>
+                    <span class="finance-budget-card-amount" id="totalBudgetAmount" style="font-size: 1.5rem; font-weight: 700; color: #28a745;">$0.00</span>
+                </div>
+                <div class="finance-budget-progress" style="margin-bottom: 0.5rem;">
+                    <div class="finance-budget-progress-bar" style="background-color: #e9ecef; height: 10px; border-radius: 5px; overflow: hidden;">
+                        <div class="finance-budget-progress-fill" style="width: 0%; height: 100%; background-color: #007bff; transition: width 0.3s ease-in-out;"></div>
+                    </div>
+                    <div class="finance-budget-progress-text" id="budgetProgressText" style="text-align: center; margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;">0% used</div>
+                </div>
+                <div class="finance-budget-card-footer" style="text-align: right;">
+                    <span class="finance-budget-remaining" id="budgetRemaining" style="font-size: 0.9rem; font-weight: 600; color: #dc3545;">$0.00 remaining</span>
+                </div>
+            </div>
 
-      <!-- Budget Section -->
-      <div id="budget-section" class="finance-content-section">
-        <div class="finance-budget-section-container">
-          <h4 class="finance-budget-section-header">Budget Management</h4>
-          <!-- Budget section code here -->
+            <div class="finance-budget-card" style="flex: 1; min-width: 300px; background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <div class="finance-budget-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h5 style="font-weight: 600; color: #007bff; margin: 0;">Set New Budget</h5>
+                </div>
+                <div class="finance-budget-form">
+                    <div class="finance-budget-form-group" style="margin-bottom: 1rem;">
+                        <label class="finance-budget-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Budget Amount</label>
+                        <div class="finance-budget-input-group" style="display: flex; align-items: center;">
+                            <span class="finance-budget-input-prefix" style="background-color: #e9ecef; padding: 0.75rem 1rem; border: 1px solid #ced4da; border-right: none; border-radius: 8px 0 0 8px;">$</span>
+                            <input type="number" step="0.01" class="finance-budget-form-input" id="budgetAmount" placeholder="0.00" required style="flex-grow: 1; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 0 8px 8px 0; font-size: 1rem;">
+                        </div>
+                    </div>
+                    <div class="finance-budget-form-group" style="margin-bottom: 1.5rem;">
+                        <label class="finance-budget-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Category</label>
+                        <select class="finance-budget-form-input" id="budgetCategory" required style="width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+                            <option value="">Select Category</option>
+                            <option value="Food & Dining">Food & Dining</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Housing">Housing</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <button class="finance-setbudget-btn" id="setBudgetBtn" type="button" style="width: 100%; padding: 0.75rem; background-color: #28a745; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Set Budget</button>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="finance-budget-categories-container" style="background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-top: 2rem;">
+            <h5 style="font-weight: 600; color: #007bff; margin-bottom: 1.5rem;">Budget by Category</h5>
+            <div class="finance-budget-categories-list" id="budgetCategoriesList">
+                </div>
+        </div>
+    </div>
+</div>
+
 
 
 
