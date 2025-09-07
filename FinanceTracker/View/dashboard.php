@@ -619,7 +619,7 @@ mysqli_close($con);
 
 
       <!-- Debt Tracking Section -->
-      div id="debt-tracking-section" class="finance-content-section">
+    </div>div id="debt-tracking-section" class="finance-content-section">
     <div class="finance-debt-section-container">
         <h4 class="finance-debt-section-header">Debt Tracking</h4>
         <div class="finance-debt-content">
