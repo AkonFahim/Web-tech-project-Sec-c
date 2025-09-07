@@ -204,46 +204,7 @@ mysqli_close($con);
           </div>
         </div>
         
-        <!-- Charts and Visualizations -->
-        <div class="finance-charts-container">
-          <div class="finance-chart-card">
-            <div class="finance-chart-header">
-              <h3>Income vs Expenses</h3>
-              <select class="finance-chart-period-selector" id="incomeExpensePeriod">
-                <option>Last 7 Days</option>
-                <option selected>Last 30 Days</option>
-                <option>Last 90 Days</option>
-              </select>
-            </div>
-            <canvas id="incomeExpenseChart"></canvas>
-          </div>
-          
-          <div class="finance-chart-card">
-            <div class="finance-chart-header">
-              <h3>Spending by Category</h3>
-              <select class="finance-chart-period-selector" id="spendingCategoryPeriod">
-                <option>Last 7 Days</option>
-                <option selected>Last 30 Days</option>
-                <option>Last 90 Days</option>
-              </select>
-            </div>
-            <canvas id="spendingCategoryChart"></canvas>
-          </div>
-        </div>
-        
-        <!-- Recent Transactions -->
-        <div class="finance-recent-transactions-container">
-          <div class="finance-section-header">
-            <h3>Recent Transactions</h3>
-            <button class="finance-view-all-button">View All</button>
-          </div>
-          
-          <div class="finance-transactions-list" id="recentTransactionsList">
-            <!-- Transactions will be loaded via JavaScript -->
-            <p class="finance-no-transactions-text">No recent transactions</p>
-          </div>
-        </div>
-      </div>
+      
  <!-- income section -->
        <div id="income-section" class="finance-content-section">
         <div class="finance-income-section-container">
