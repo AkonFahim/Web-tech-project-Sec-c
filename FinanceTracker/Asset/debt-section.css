@@ -1,0 +1,226 @@
+/* debtsection.css */
+.finance-debt-section-container {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.finance-debt-section-header {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.finance-debt-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.finance-debt-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.finance-debt-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-debt-card-header {
+  margin-bottom: 15px;
+}
+
+.finance-debt-card-header h5 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.finance-debt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finance-debt-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.finance-debt-form-label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.finance-debt-input-group {
+  display: flex;
+  align-items: center;
+}
+
+.finance-debt-input-prefix {
+  background-color: #e9ecef;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+}
+
+.finance-debt-input-suffix {
+  background-color: #e9ecef;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+}
+
+.finance-debt-form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.finance-debt-form-input:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+.finance-adddebt-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-adddebt-btn:hover {
+  background-color: #c0392b;
+}
+
+.finance-debt-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.finance-debt-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.finance-debt-summary-label {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.finance-debt-summary-value {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.finance-debt-payoff-chart {
+  height: 200px;
+}
+
+.finance-debt-list-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.finance-debt-list-container h5 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.finance-debt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finance-debt-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.finance-debt-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.finance-debt-details {
+  flex: 1;
+}
+
+.finance-debt-details h6 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+}
+
+.finance-debt-details p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.finance-debt-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.finance-debt-balance {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.finance-debt-payment {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.finance-debt-actions {
+  display: flex;
+}
+
+.finance-makepayment-btn {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.finance-makepayment-btn:hover {
+  background-color: #27ae60;
+}
