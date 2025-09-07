@@ -1,13 +1,11 @@
 <?php
 session_start();
-
 if(isset($_SESSION['user_id'])) {
     header('location: dashboard.php');
     exit();
 }
-
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_me']) && isset($_COOKIE['user_id'])) {
-    include '../Model/db_connection.php';
+    include '../Controller/db_connection.php';
     $user_id = $_COOKIE['user_id'];
     $sql = "SELECT * FROM users WHERE id = '$user_id' AND status = 'active'";
     $result = mysqli_query($con, $sql);
@@ -25,6 +23,8 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_me']) && isset($_CO
     }
     mysqli_close($con);
 }
+
+$err1 = $err2 = '';
 
 if(isset($_REQUEST['error'])){
     $error = $_REQUEST['error'];
@@ -48,12 +48,6 @@ if(isset($_REQUEST['error'])){
      {
         $err2 = "Your session has expired. Please login again.";
     }
-}
-
-$is_reload= !isset($_REQUEST['error']);
-
-if ($is_reload) {
-    $err1 = $err2 = '';
 }
 ?>
 
@@ -96,7 +90,7 @@ if ($is_reload) {
           <div class="input-group">
             <i class="fas fa-envelope"></i>
             <input type="email" id="loginEmail" name="email" placeholder="Email Address" required 
-                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : (isset($_GET['email']) ? htmlspecialchars($_GET['email']) : ''); ?>">
           </div>
           
           <div class="input-group">
@@ -112,13 +106,17 @@ if ($is_reload) {
               <input type="checkbox" id="remember" name="remember">
               <label for="remember">Remember me for 7 days</label>
             </div>
-            <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
+            <a href="forgotpassword.php" class="forgot-password">Forgot Password?</a>
           </div>
           
+          <?php if(!empty($err1) || !empty($err2)): ?>
           <div id="errorMessage" class="error-message">
-            <?php if(isset($err1)){echo $err1;} ?>
-            <?php if(isset($err2)){echo $err2;} ?>
+            <?php if(!empty($err1)): echo $err1; endif; ?>
+            <?php if(!empty($err2)): echo $err2; endif; ?>
           </div>
+          <?php else: ?>
+          <div id="errorMessage" class="error-message" style="display: none;"></div>
+          <?php endif; ?>
           
           <button type="submit" name="submit" class="btn" id="signin-btn">Sign In</button>
         </form>
@@ -139,28 +137,6 @@ if ($is_reload) {
         </div>
       </div>
     </div>
-
-     <div class="modal" id="forgotPasswordModal">
-    <div class="modal-content">
-      <button class="modal-close" id="closeModal">&times;</button>
-      <div class="modal-header">
-        <h2>Reset Your Password</h2>
-        <p>Enter your email to receive a reset link</p>
-      </div>
-
-      <form id="forgotPasswordForm">
-        <div class="input-group">
-          <i class="fas fa-envelope"></i>
-          <input type="email" id="resetEmail" placeholder="Email Address" required>
-        </div>
-
-        <div id="resetErrorMessage" class="error-message"></div>
-        <div id="resetSuccessMessage" class="success-message"></div>
-
-        <button type="submit" class="btn">Send Reset Link</button>
-      </form>
-    </div>
-  </div>
   </div>
 
   <script src="../Asset/login.js"></script>
