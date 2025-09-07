@@ -245,13 +245,74 @@ mysqli_close($con);
         </div>
       </div>
 
-      <!-- Income Section -->
-      <div id="income-section" class="finance-content-section">
+       <div id="income-section" class="finance-content-section">
         <div class="finance-income-section-container">
           <h4 class="finance-income-section-header">Income Management</h4>
-        
-                <!-- income section code here -->
-              
+          <div class="finance-income-form-container">
+            <div class="finance-income-form-column">
+              <div class="finance-income-form-card">
+                <div class="finance-income-form-card-header">
+                  <h5>Add Income</h5>
+                </div>
+                <div class="finance-income-form-card-body">
+                  <form id="incomeForm">
+                    <div class="finance-income-form-group">
+                      <label for="incomeAmount" class="finance-income-form-label">Amount</label>
+                      <div class="finance-income-input-group">
+                        <span class="finance-income-input-prefix">$</span>
+                        <input type="number" step="0.01" class="finance-income-form-input" id="incomeAmount" placeholder="0.00" required>
+                      </div>
+                    </div>
+                    <div class="finance-income-form-group">
+                      <label for="incomeDescription" class="finance-income-form-label">Description</label>
+                      <input type="text" class="finance-income-form-input" id="incomeDescription" placeholder="Salary, Freelance, etc." required>
+                    </div>
+                    <div class="finance-income-form-group">
+                      <label for="incomeCategory" class="finance-income-form-label">Category</label>
+                      <select class="finance-income-form-input" id="incomeCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Investment">Investment</option>
+                        <option value="Gift">Gift</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="finance-income-form-group">
+                      <label for="incomeDate" class="finance-income-form-label">Date</label>
+                      <input type="date" class="finance-income-form-input" id="incomeDate" required>
+                    </div>
+                    <button type="button" class="finance-addincome-btn" id="saveIncome">Add Income</button>
+                  </form>
+                  <div id="incomeMessage" class="finance-income-message"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="finance-income-form-column">
+              <div class="finance-income-form-card">
+                <div class="finance-income-form-card-header">
+                  <h5>Income History</h5>
+                </div>
+                <div class="finance-income-form-card-body">
+                  <div class="finance-income-history-table-container">
+                    <table class="finance-income-history-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Description</th>
+                          <th>Category</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody id="incomeHistory">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
