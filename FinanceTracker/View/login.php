@@ -49,10 +49,10 @@ if(isset($_REQUEST['error'])){
         $err2 = "Your session has expired. Please login again.";
     }
 }
-
-if ($is_reload) {
-    $err1 = $err2 = '';
-}
+// $is_reload= !isset($_REQUEST['error']);
+// if ($is_reload) {
+//     $err1 = $err2 = '';
+// }
 ?>
 
 <!DOCTYPE html>
