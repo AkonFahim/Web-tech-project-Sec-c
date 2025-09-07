@@ -619,7 +619,7 @@ mysqli_close($con);
 
 
       <!-- Debt Tracking Section -->
-   
+  
 
      <!-- Tax Categories Section -->
 <div id="tax-categories-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
