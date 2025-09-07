@@ -391,14 +391,64 @@ mysqli_close($con);
         </div>
       </div>
 
+ <!-- Budget Section -->
+       <div id="budget-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+    <div class="finance-budget-section-container">
+        <h4 class="finance-budget-section-header" style="color: #343a40; margin-bottom: 2rem; font-weight: 700;">Budget Management</h4>
+        
+        <div class="finance-budget-cards-container" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+            <div class="finance-budget-card" style="flex: 1; min-width: 300px; background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <div class="finance-budget-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h5 style="font-weight: 600; color: #007bff; margin: 0;">Monthly Budget</h5>
+                    <span class="finance-budget-card-amount" id="totalBudgetAmount" style="font-size: 1.5rem; font-weight: 700; color: #28a745;">$0.00</span>
+                </div>
+                <div class="finance-budget-progress" style="margin-bottom: 0.5rem;">
+                    <div class="finance-budget-progress-bar" style="background-color: #e9ecef; height: 10px; border-radius: 5px; overflow: hidden;">
+                        <div class="finance-budget-progress-fill" style="width: 0%; height: 100%; background-color: #007bff; transition: width 0.3s ease-in-out;"></div>
+                    </div>
+                    <div class="finance-budget-progress-text" id="budgetProgressText" style="text-align: center; margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;">0% used</div>
+                </div>
+                <div class="finance-budget-card-footer" style="text-align: right;">
+                    <span class="finance-budget-remaining" id="budgetRemaining" style="font-size: 0.9rem; font-weight: 600; color: #dc3545;">$0.00 remaining</span>
+                </div>
+            </div>
 
-      <!-- Budget Section -->
-      <div id="budget-section" class="finance-content-section">
-        <div class="finance-budget-section-container">
-          <h4 class="finance-budget-section-header">Budget Management</h4>
-          <!-- Budget section code here -->
+            <div class="finance-budget-card" style="flex: 1; min-width: 300px; background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <div class="finance-budget-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h5 style="font-weight: 600; color: #007bff; margin: 0;">Set New Budget</h5>
+                </div>
+                <div class="finance-budget-form">
+                    <div class="finance-budget-form-group" style="margin-bottom: 1rem;">
+                        <label class="finance-budget-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Budget Amount</label>
+                        <div class="finance-budget-input-group" style="display: flex; align-items: center;">
+                            <span class="finance-budget-input-prefix" style="background-color: #e9ecef; padding: 0.75rem 1rem; border: 1px solid #ced4da; border-right: none; border-radius: 8px 0 0 8px;">$</span>
+                            <input type="number" step="0.01" class="finance-budget-form-input" id="budgetAmount" placeholder="0.00" required style="flex-grow: 1; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 0 8px 8px 0; font-size: 1rem;">
+                        </div>
+                    </div>
+                    <div class="finance-budget-form-group" style="margin-bottom: 1.5rem;">
+                        <label class="finance-budget-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Category</label>
+                        <select class="finance-budget-form-input" id="budgetCategory" required style="width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+                            <option value="">Select Category</option>
+                            <option value="Food & Dining">Food & Dining</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Housing">Housing</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <button class="finance-setbudget-btn" id="setBudgetBtn" type="button" style="width: 100%; padding: 0.75rem; background-color: #28a745; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Set Budget</button>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="finance-budget-categories-container" style="background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-top: 2rem;">
+            <h5 style="font-weight: 600; color: #007bff; margin-bottom: 1.5rem;">Budget by Category</h5>
+            <div class="finance-budget-categories-list" id="budgetCategoriesList">
+                </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -438,13 +488,171 @@ mysqli_close($con);
         </div>
       </div>
 
-      <!-- Tax Categories Section -->
-      <div id="tax-categories-section" class="finance-content-section">
-        <div class="finance-tax-section-container">
-          <h4 class="finance-tax-section-header">Tax Categories</h4>
-          <!-- Tax Categories section code here -->
+     <!-- Tax Categories Section -->
+<div id="tax-categories-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+  <div class="finance-tax-section-container">
+    <h4 class="finance-tax-section-header" style="color: #343a40; margin-bottom: 2rem; font-weight: 700;">Tax Categories</h4>
+    <div class="finance-tax-content">
+      <div class="finance-tax-deduction-manager-container" style="background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-bottom: 2rem;">
+        <h5 style="font-weight: 600; color: #007bff; margin-bottom: 1.5rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem;">Deductible Expenses Manager</h5>
+        <form id="taxExpenseForm" class="finance-tax-form" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; align-items: flex-end;">
+          <div class="finance-tax-form-group" style="display: flex; flex-direction: column; flex: 1; min-width: 200px;">
+            <label for="taxExpenseDescription" style="font-weight: 500; color: #495057; margin-bottom: 0.5rem;">Description</label>
+            <input type="text" id="taxExpenseDescription" placeholder="e.g., Office Supplies" required style="padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+          </div>
+          <div class="finance-tax-form-group" style="display: flex; flex-direction: column; flex: 1; min-width: 200px;">
+            <label for="taxExpenseAmount" style="font-weight: 500; color: #495057; margin-bottom: 0.5rem;">Amount</label>
+            <input type="number" id="taxExpenseAmount" placeholder="0.00" step="0.01" required style="padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+          </div>
+          <div class="finance-tax-form-group" style="display: flex; flex-direction: column; flex: 1; min-width: 200px;">
+            <label for="taxExpenseDate" style="font-weight: 500; color: #495057; margin-bottom: 0.5rem;">Date</label>
+            <input type="date" id="taxExpenseDate" required style="padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+          </div>
+          <div class="finance-tax-form-group" style="display: flex; flex-direction: column; flex: 1; min-width: 200px;">
+            <label for="taxExpenseCategory" style="font-weight: 500; color: #495057; margin-bottom: 0.5rem;">Category</label>
+            <select id="taxExpenseCategory" required style="padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+              <option value="">Select Category</option>
+              <option value="Home Office">Home Office</option>
+              <option value="Business Travel">Business Travel</option>
+              <option value="Charitable Donation">Charitable Donation</option>
+              <option value="Supplies">Supplies</option>
+            </select>
+          </div>
+          <button type="submit" class="finance-add-tax-expense-btn" style="padding: 0.75rem 1.5rem; background-color: #28a745; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Add Expense</button>
+        </form>
+
+        <div class="finance-tax-deductions-list">
+          <h6 style="font-weight: 600; color: #495057; margin-bottom: 1.5rem;">Deduction History</h6>
+          <table class="finance-tax-table" style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+            <thead>
+              <tr style="background-color: #e9ecef; font-weight: 600; color: #495057;">
+                <th style="padding: 1rem; border-bottom: 1px solid #dee2e6;">Date</th>
+                <th style="padding: 1rem; border-bottom: 1px solid #dee2e6;">Description</th>
+                <th style="padding: 1rem; border-bottom: 1px solid #dee2e6;">Category</th>
+                <th style="padding: 1rem; border-bottom: 1px solid #dee2e6;">Amount</th>
+                <th style="padding: 1rem; border-bottom: 1px solid #dee2e6;">Tax Savings</th>
+                <th style="padding: 1rem; border-bottom: 1px solid #dee2e6;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="taxDeductionHistory">
+              </tbody>
+          </table>
         </div>
       </div>
+
+      <div class="finance-tax-export-container" style="background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-top: 2rem;">
+        <h5 style="font-weight: 600; color: #007bff; margin-bottom: 1.5rem;">Export Tax Data</h5>
+        <div class="finance-tax-export-options" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="finance-exportcsv-btn" style="padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid #20c997; cursor: pointer; font-weight: 600; background-color: #20c997; color: #fff;">Export to CSV</button>
+          <button class="finance-exportpdf-btn" style="padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid #dc3545; cursor: pointer; font-weight: 600; background-color: #dc3545; color: #fff;">Export to PDF</button>
+          <button class="finance-exportcpa-btn" style="padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid #ffc107; cursor: pointer; font-weight: 600; background-color: #ffc107; color: #212529;">CPA Report</button>
+        </div>
+        <div style="margin-top: 1.5rem; font-size: 1.2rem; font-weight: 700; color: #28a745;">
+          Total Tax : <span id="totalTaxSavings">$0.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // ------------------- In-Memory Tax Deductions -------------------
+  let taxDeductions = [];
+
+  // Define tax rates for each category (as a decimal percentage)
+  const taxRates = {
+    'Home Office': 0.35,
+    'Business Travel': 0.25,
+    'Charitable Donation': 0.15,
+    'Supplies': 0.20,
+    'Other': 0.18
+  };
+
+  // --- Data Persistence Functions ---
+  const saveDeductions = () => {
+    localStorage.setItem('taxDeductions', JSON.stringify(taxDeductions));
+  };
+
+  const loadDeductions = () => {
+    const savedDeductions = localStorage.getItem('taxDeductions');
+    if (savedDeductions) {
+      taxDeductions = JSON.parse(savedDeductions);
+    }
+  };
+
+  // --- Rendering Functions ---
+  const renderDeductionHistory = () => {
+    const taxDeductionHistory = document.getElementById('taxDeductionHistory');
+    const totalTaxSavingsElement = document.getElementById('totalTaxSavings');
+    taxDeductionHistory.innerHTML = ''; // Clear the table first
+    let totalSavings = 0;
+
+    if (taxDeductions.length === 0) {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td colspan="6" class="text-center">No deductible expenses recorded.</td>`;
+      taxDeductionHistory.appendChild(row);
+      totalTaxSavingsElement.textContent = '$0.00';
+      return;
+    }
+
+    taxDeductions.forEach((deduction) => {
+      const taxRate = taxRates[deduction.category] || taxRates['Other']; // Default to 'Other' if category not found
+      const savings = deduction.amount * taxRate;
+      totalSavings += savings;
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${deduction.date}</td>
+        <td>${deduction.description}</td>
+        <td>${deduction.category}</td>
+        <td>$${deduction.amount.toFixed(2)}</td>
+        <td>$${savings.toFixed(2)}</td>
+        <td><button class="finance-delete-btn" data-id="${deduction.id}">Delete</button></td>
+      `;
+      taxDeductionHistory.appendChild(row);
+    });
+
+    totalTaxSavingsElement.textContent = `$${totalSavings.toFixed(2)}`;
+
+    // Add event listeners to newly created delete buttons
+    document.querySelectorAll('.finance-delete-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const deductionId = e.target.getAttribute('data-id');
+        deleteTaxDeduction(deductionId);
+      });
+    });
+  };
+
+  // --- Deletion Function ---
+  const deleteTaxDeduction = (id) => {
+    taxDeductions = taxDeductions.filter(deduction => deduction.id != id);
+    saveDeductions();
+    renderDeductionHistory();
+  };
+
+  // --- Initialization and Event Handling ---
+  document.addEventListener('DOMContentLoaded', () => {
+    loadDeductions();
+    renderDeductionHistory();
+
+    const taxExpenseForm = document.getElementById('taxExpenseForm');
+    taxExpenseForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const newDeduction = {
+        id: Date.now(), // Unique ID for each deduction
+        description: document.getElementById('taxExpenseDescription').value,
+        amount: parseFloat(document.getElementById('taxExpenseAmount').value),
+        date: document.getElementById('taxExpenseDate').value,
+        category: document.getElementById('taxExpenseCategory').value,
+      };
+
+      taxDeductions.push(newDeduction);
+      taxExpenseForm.reset();
+      saveDeductions();
+      renderDeductionHistory();
+    });
+  });
+</script>
 
 
       <!-- Export Data Section -->
