@@ -597,6 +597,7 @@ mysqli_close($con);
         }
     });
 </script>
+</div>
 
 
       <!-- Reports Section -->
@@ -609,13 +610,87 @@ mysqli_close($con);
 
 
 
-      <!-- Savings Goals Section -->
-      <div id="savings-goals-section" class="finance-content-section">
-        <div class="finance-savings-section-container">
-          <h4 class="finance-savings-section-header">Savings Goals</h4>
-          <!-- Savings Goals section code here -->
+        <!-- Savings Goals Section -->
+        
+ <div id="savings-goals-section" class="finance-content-section">
+  <div class="finance-savings-section-container">
+    <h4 class="finance-savings-section-header">Savings Goals</h4>
+    <div class="finance-savings-content">
+      <div class="finance-savings-cards-container">
+        <!-- Create New Goal Card -->
+        <div class="finance-savings-card">
+          <div class="finance-savings-card-header">
+            <h5>Create New Goal</h5>
+          </div>
+          <div class="finance-savings-form">
+            <div class="finance-savings-form-group">
+              <label class="finance-savings-form-label">Goal Name</label>
+              <input type="text" class="finance-savings-form-input" id="goal-name-input" placeholder="e.g., New Laptop">
+            </div>
+            <div class="finance-savings-form-group">
+              <label class="finance-savings-form-label">Target Amount</label>
+              <div class="finance-savings-input-group">
+                <span class="finance-savings-input-prefix">$</span>
+                <input type="number" step="0.01" class="finance-savings-form-input" id="target-amount-input" placeholder="0.00">
+              </div>
+            </div>
+            <div class="finance-savings-form-group">
+              <label class="finance-savings-form-label">Target Date</label>
+              <input type="date" class="finance-savings-form-input" id="target-date-input">
+            </div>
+            <div class="finance-savings-form-group">
+              <label class="finance-savings-form-label">Initial Amount</label>
+              <div class="finance-savings-input-group">
+                <span class="finance-savings-input-prefix">$</span>
+                <input type="number" step="0.01" class="finance-savings-form-input" id="initial-amount-input" placeholder="0.00">
+              </div>
+            </div>
+            <button class="finance-creategoal-btn" id="create-goal-btn">Create Goal</button>
+          </div>
+        </div>
+
+        <!-- Savings Summary Card -->
+        <div class="finance-savings-card">
+          <div class="finance-savings-card-header">
+            <h5>Savings Summary</h5>
+          </div>
+          <div class="finance-savings-summary">
+            <div class="finance-savings-summary-item">
+              <span class="finance-savings-summary-label">Total Goals</span>
+              <span class="finance-savings-summary-value" id="total-goals-value">0</span>
+            </div>
+            <div class="finance-savings-summary-item">
+              <span class="finance-savings-summary-label">Total Saved</span>
+              <span class="finance-savings-summary-value" id="total-saved-value">$0.00</span>
+            </div>
+            <div class="finance-savings-summary-item">
+              <span class="finance-savings-summary-label">Total Target</span>
+              <span class="finance-savings-summary-value" id="total-target-value">$0.00</span>
+            </div>
+            <div class="finance-savings-summary-item">
+              <span class="finance-savings-summary-label">Overall Progress</span>
+              <span class="finance-savings-summary-value" id="overall-progress-value">0%</span>
+            </div>
+          </div>
+          <div class="finance-savings-overall-progress">
+            <div class="finance-savings-progress-bar">
+              <div class="finance-savings-progress-fill" id="overall-progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Your Savings Goals List -->
+      <div class="finance-savings-goals-container" id="goals-list-container">
+        <h5>Your Savings Goals</h5>
+        <div class="finance-savings-goals-list" id="savings-goals-list">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
       <!-- Debt Tracking Section -->
@@ -890,7 +965,8 @@ mysqli_close($con);
   <script src="../Asset/expense-section.js"></script>
   <script src="../Asset/budget-section.js"></script>
   <script src="../Asset/billreminder-section.js"></script>
-  <script src="../Asset/report-section.js"></script>
+  <script src="../Asset/report-section.js"></script>\
+  
   <script src="../Asset/savings-section.js"></script>
   <script src="../Asset/debt-section.js"></script>
   <script src="../Asset/tax-section.js"></script>
