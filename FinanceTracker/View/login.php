@@ -49,10 +49,12 @@ if(isset($_REQUEST['error'])){
         $err2 = "Your session has expired. Please login again.";
     }
 }
-// $is_reload= !isset($_REQUEST['error']);
-// if ($is_reload) {
-//     $err1 = $err2 = '';
-// }
+
+$is_reload= !isset($_REQUEST['error']);
+
+if ($is_reload) {
+    $err1 = $err2 = '';
+}
 ?>
 
 <!DOCTYPE html>
@@ -145,21 +147,21 @@ if(isset($_REQUEST['error'])){
         <h2>Reset Your Password</h2>
         <p>Enter your email to receive a reset link</p>
       </div>
-      
+
       <form id="forgotPasswordForm">
         <div class="input-group">
           <i class="fas fa-envelope"></i>
           <input type="email" id="resetEmail" placeholder="Email Address" required>
         </div>
-        
+
         <div id="resetErrorMessage" class="error-message"></div>
         <div id="resetSuccessMessage" class="success-message"></div>
-        
+
         <button type="submit" class="btn">Send Reset Link</button>
       </form>
     </div>
   </div>
-
+  </div>
 
   <script src="../Asset/login.js"></script>
 </body>
