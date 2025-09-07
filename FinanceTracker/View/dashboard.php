@@ -452,13 +452,151 @@ mysqli_close($con);
 
 
 
-      <!-- Bill Reminders Section -->
-      <div id="bill-reminders-section" class="finance-content-section">
-        <div class="finance-billreminder-section-container">
-          <h4 class="finance-billreminder-section-header">Bill Reminders</h4>
-          <!-- Bill Reminder section code here -->
+    <!-- Bill Reminders Section -->
+     <div id="bill-reminders-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+    <div class="finance-billreminder-section-container">
+        <h4 class="finance-billreminder-section-header" style="color: #343a40; margin-bottom: 2rem; font-weight: 700;">Bill Reminders</h4>
+        <div class="finance-billreminder-content">
+            <div class="finance-billreminder-cards-container" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                <div class="finance-billreminder-card" style="flex: 1; min-width: 300px; background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                    <div class="finance-billreminder-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem;">
+                        <h5 style="font-weight: 600; color: #007bff;">Upcoming Bills</h5>
+                    </div>
+                    <div class="finance-billreminder-list">
+                        </div>
+                </div>
+
+                <div class="finance-billreminder-card" style="flex: 1; min-width: 300px; background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                    <div class="finance-billreminder-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem;">
+                        <h5 style="font-weight: 600; color: #007bff;">Add New Bill</h5>
+                    </div>
+                    <div class="finance-billreminder-form">
+                        <div class="finance-billreminder-form-group" style="margin-bottom: 1rem;">
+                            <label class="finance-billreminder-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Bill Name</label>
+                            <input type="text" id="billName" class="finance-billreminder-form-input" placeholder="e.g., Internet Bill" required style="width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+                        </div>
+                        <div class="finance-billreminder-form-group" style="margin-bottom: 1rem;">
+                            <label class="finance-billreminder-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Amount</label>
+                            <div class="finance-billreminder-input-group" style="display: flex; align-items: center;">
+                                <span class="finance-billreminder-input-prefix" style="background-color: #e9ecef; padding: 0.75rem 1rem; border: 1px solid #ced4da; border-right: none; border-radius: 8px 0 0 8px;">$</span>
+                                <input type="number" step="0.01" id="billAmount" class="finance-billreminder-form-input" placeholder="0.00" required style="width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 0 8px 8px 0; font-size: 1rem;">
+                            </div>
+                        </div>
+                        <div class="finance-billreminder-form-group" style="margin-bottom: 1rem;">
+                            <label class="finance-billreminder-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Due Date</label>
+                            <input type="date" id="billDate" class="finance-billreminder-form-input" required style="width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+                        </div>
+                        <div class="finance-billreminder-form-group" style="margin-bottom: 1.5rem;">
+                            <label class="finance-billreminder-form-label" style="font-weight: 500; color: #495057; display: block; margin-bottom: 0.5rem;">Recurrence</label>
+                            <select id="billRecurrence" class="finance-billreminder-form-input" required style="width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem;">
+                                <option value="once">One Time</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+                        <button id="saveBillBtn" class="finance-savebill-btn" style="width: 100%; padding: 0.75rem; background-color: #28a745; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Save Bill</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
+</div>
+<script>
+    // In-memory array to store bills
+    let bills = [];
+
+    // Function to save bills to localStorage
+    const saveBills = () => {
+        localStorage.setItem('bills', JSON.stringify(bills));
+    };
+
+    // Function to load bills from localStorage
+    const loadBills = () => {
+        const storedBills = localStorage.getItem('bills');
+        if (storedBills) {
+            bills = JSON.parse(storedBills);
+        }
+    };
+
+    // Function to render the bills on the page
+    const renderBills = () => {
+        const billList = document.querySelector('.finance-billreminder-list');
+        billList.innerHTML = '';
+
+        if (bills.length === 0) {
+            billList.innerHTML = '<p style="text-align: center; color: #6c757d; margin-top: 1rem;">No upcoming bills.</p>';
+            return;
+        }
+
+        bills.forEach(bill => {
+            const billItem = document.createElement('div');
+            billItem.classList.add('bill-item');
+            billItem.style.cssText = "display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #e9ecef;";
+            billItem.innerHTML = `
+                <div>
+                    <strong style="color: #495057;">${bill.name}</strong>
+                    <span style="display: block; font-size: 0.8rem; color: #6c757d;">Due: ${bill.date}</span>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-weight: 600; color: #dc3545;">$${bill.amount.toFixed(2)}</span>
+                    <button class="delete-bill-btn" data-id="${bill.id}" style="background: none; border: none; color: #dc3545; cursor: pointer; margin-left: 0.5rem;"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            billList.appendChild(billItem);
+        });
+
+        // Add event listeners for delete buttons
+        document.querySelectorAll('.delete-bill-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const billId = parseInt(e.currentTarget.dataset.id);
+                deleteBill(billId);
+            });
+        });
+    };
+
+    // Function to handle saving a new bill
+    const handleSaveBill = () => {
+        const name = document.getElementById('billName').value;
+        const amount = parseFloat(document.getElementById('billAmount').value);
+        const date = document.getElementById('billDate').value;
+        const recurrence = document.getElementById('billRecurrence').value;
+
+        if (name && amount && date) {
+            const newBill = {
+                id: Date.now(),
+                name: name,
+                amount: amount,
+                date: date,
+                recurrence: recurrence,
+            };
+            bills.push(newBill);
+            saveBills();
+            renderBills();
+            document.querySelector('.finance-billreminder-form').reset();
+        } else {
+            alert('Please fill out all fields.');
+        }
+    };
+
+    // Function to delete a bill
+    const deleteBill = (id) => {
+        bills = bills.filter(bill => bill.id !== id);
+        saveBills();
+        renderBills();
+    };
+
+    // Initialize the bill section on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        loadBills();
+        renderBills();
+
+        const saveBillButton = document.getElementById('saveBillBtn');
+        if (saveBillButton) {
+            saveBillButton.addEventListener('click', handleSaveBill);
+        }
+    });
+</script>
 
 
       <!-- Reports Section -->
