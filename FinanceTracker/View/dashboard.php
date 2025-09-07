@@ -174,7 +174,7 @@ mysqli_close($con);
           <div class="finance-summary-card">
             <div class="finance-card-icon finance-savings-icon"><i class="fas fa-piggy-bank"></i></div>
             <div class="finance-card-content">
-              <div class="finance-card-value" id="balanceDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'] - $_SESSION['financeData']['totalExpenses'], 2); ?></div>
+              <div class="finance-card-value" id="balanceDisplay"></div>
               <div class="finance-card-label">Balance</div>
             </div>
           </div>
@@ -182,7 +182,7 @@ mysqli_close($con);
           <div class="finance-summary-card">
             <div class="finance-card-icon finance-income-icon"><i class="fas fa-money-bill-wave"></i></div>
             <div class="finance-card-content">
-              <div class="finance-card-value" id="totalIncomeDisplay">$<?php echo number_format($_SESSION['financeData']['totalIncome'], 2); ?></div>
+              <div class="finance-card-value" id="totalIncomeDisplay"></div>
               <div class="finance-card-label">Total Income</div>
             </div>
           </div>
@@ -190,7 +190,7 @@ mysqli_close($con);
           <div class="finance-summary-card">
             <div class="finance-card-icon finance-expenses-icon"><i class="fas fa-credit-card"></i></div>
             <div class="finance-card-content">
-              <div class="finance-card-value" id="totalExpensesDisplay">$<?php echo number_format($_SESSION['financeData']['totalExpenses'], 2); ?></div>
+              <div class="finance-card-value" id="totalExpensesDisplay"></div>
               <div class="finance-card-label">Total Expenses</div>
             </div>
           </div>
@@ -349,6 +349,7 @@ mysqli_close($con);
     transactions: <?php echo json_encode($_SESSION['financeData']['transactions']); ?>,
     lastMonthData: <?php echo json_encode($_SESSION['financeData']['lastMonthData']); ?>
 };
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../Asset/dashboard.js"></script>
