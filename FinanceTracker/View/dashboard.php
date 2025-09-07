@@ -965,7 +965,7 @@ mysqli_close($con);
   <script src="../Asset/expense-section.js"></script>
   <script src="../Asset/budget-section.js"></script>
   <script src="../Asset/billreminder-section.js"></script>
-  <script src="../Asset/report-section.js"></script>\
+  <script src="../Asset/report-section.js"></script>
   
   <script src="../Asset/savings-section.js"></script>
   <script src="../Asset/debt-section.js"></script>
