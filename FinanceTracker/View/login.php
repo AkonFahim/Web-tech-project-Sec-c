@@ -139,6 +139,28 @@ if ($is_reload) {
         </div>
       </div>
     </div>
+
+     <div class="modal" id="forgotPasswordModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <div class="modal-header">
+        <h2>Reset Your Password</h2>
+        <p>Enter your email to receive a reset link</p>
+      </div>
+
+      <form id="forgotPasswordForm">
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="resetEmail" placeholder="Email Address" required>
+        </div>
+
+        <div id="resetErrorMessage" class="error-message"></div>
+        <div id="resetSuccessMessage" class="success-message"></div>
+
+        <button type="submit" class="btn">Send Reset Link</button>
+      </form>
+    </div>
+  </div>
   </div>
 
   <script src="../Asset/login.js"></script>
