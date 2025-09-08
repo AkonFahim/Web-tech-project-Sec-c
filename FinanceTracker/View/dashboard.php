@@ -60,6 +60,7 @@ mysqli_close($con);
 
   <link rel="stylesheet" href="../Asset/dashboard.css">
   <link rel="stylesheet" href="../Asset/dashboard-section.css">
+  <link rel="stylesheet" href="../Asset/profile-section.css">
   <link rel="stylesheet" href="../Asset/income-section.css">
   <link rel="stylesheet" href="../Asset/expense-section.css">
   <link rel="stylesheet" href="../Asset/budget-section.css">
@@ -102,6 +103,10 @@ mysqli_close($con);
   <a href="#" class="finance-sidebar-menu-item-link active-menu-link" data-section="dashboard-section">
     <i class="fas fa-home finance-sidebar-menu-item-icon"></i> <span>Dashboard</span>
   </a>
+   <a href="#" class="finance-sidebar-menu-item-link " data-section="profile-section">
+    <i class="fas fa-user finance-sidebar-menu-item-icon"></i> <span>Profile</span>
+  </a>
+  
   <a href="#" class="finance-sidebar-menu-item-link" data-section="income-section">
     <i class="fas fa-money-bill-wave finance-sidebar-menu-item-icon"></i> <span>Income</span>
   </a>
@@ -129,6 +134,9 @@ mysqli_close($con);
   </a>
   <a href="#" class="finance-sidebar-menu-item-link" data-section="settings-section">
     <i class="fas fa-cog finance-sidebar-menu-item-icon"></i> <span>Settings</span>
+  </a>
+  <a href="#" class="finance-sidebar-menu-item-link " data-section="dashboard-section">
+    <i class="fas fa-user finance-sidebar-menu-item-icon"></i> <span>Profile</span>
   </a>
   <a href="#" class="finance-sidebar-menu-item-link" id="logoutLink">
     <i class="fas fa-sign-out-alt finance-sidebar-menu-item-icon"></i> <span>Logout</span>
@@ -230,7 +238,73 @@ mysqli_close($con);
             </div>
         </div>
     </div>
+ </div>
+   
+  <!-- profile Section -->
+<div id="profile-section" class="finance-content-section">
+
+    <div class="finance-profile-card">
+        <h4 class="finance-card-header">Your Profile</h4>
+        <div class="finance-profile-details">
+            <div class="finance-profile-avatar">
+                <img src="" alt="User Avatar" id="profileAvatar">
+            </div>
+            <p><strong>Name:</strong> <span id="profileName"><?php echo isset($user['username']) ? htmlspecialchars($user['username']) : 'User'; ?></span></p>
+            <p><strong>Email:</strong> <span id="profileEmail"><?php echo isset($user['email']) ? htmlspecialchars($user['email']) : 'User'; ?></span></p>
+            
+        </div>
+        <button class="finance-edit-btn">Edit Profile</button>
+    </div>
+
+    <div class="finance-profile-card finance-hidden" id="editProfileSection">
+        <h4 class="finance-card-header">Edit Personal Details</h4>
+        <form id="editProfileForm">
+            <div class="finance-form-group">
+                <label for="editName">Full Name</label>
+                <input type="text" id="editName" class="finance-form-input">
+            </div>
+            <div class="finance-form-group">
+                <label for="editEmail">Email Address</label>
+                <input type="email" id="editEmail" class="finance-form-input">
+            </div>
+            <button type="submit" class="finance-addexpense-btn">Save Changes</button>
+            <button type="button" class="finance-cancel-btn">Cancel</button>
+        </form>
+    </div>
+
+    <div class="finance-profile-card">
+        <h4 class="finance-card-header">Change Profile Picture</h4>
+        <form id="changeAvatarForm">
+            <div class="finance-form-group">
+                <input type="file" id="avatarUpload" accept="image/*" class="finance-form-input">
+            </div>
+            <button type="submit" class="finance-addexpense-btn">Upload New Picture</button>
+        </form>
+    </div>
+
+    <div class="finance-profile-card">
+        <h4 class="finance-card-header">Update Password</h4>
+        <form id="updatePasswordForm">
+            <div class="finance-form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" class="finance-form-input">
+            </div>
+            <div class="finance-form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" class="finance-form-input">
+            </div>
+            <div class="finance-form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" id="confirmPassword" class="finance-form-input">
+            </div>
+            <button type="submit" class="finance-addexpense-btn">Change Password</button>
+        </form>
+    </div>
 </div>
+
+
+
+
     
    <!-- income section -->
        <div id="income-section" class="finance-content-section">
@@ -380,7 +454,7 @@ mysqli_close($con);
       </div>
 
  <!-- Budget Section -->
-       <div id="budget-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+     <div id="budget-section" class="finance-content-section" style="padding: 2rem; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
     <div class="finance-budget-section-container">
         <h4 class="finance-budget-section-header" style="color: #343a40; margin-bottom: 2rem; font-weight: 700;">Budget Management</h4>
         
@@ -942,6 +1016,8 @@ mysqli_close($con);
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../Asset/dashboard.js"></script>
   <script src="../Asset/dashboard-section.js"></script>
+  <script src="../Asset/profile-section.js"></script>
+
   <script src="../Asset/income-section.js"></script>
   <script src="../Asset/expense-section.js"></script>
   <script src="../Asset/budget-section.js"></script>
