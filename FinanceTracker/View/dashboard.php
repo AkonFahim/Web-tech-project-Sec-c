@@ -161,7 +161,7 @@ mysqli_close($con);
     </div>
 
     <div class="finance-page-content-container">
-   <!-- Dashboard Section -->
+   <!-- Dashboard Section final-->
  <div id="dashboard-section" class="finance-content-section active-content-section">
     <div class="finance-dashboard-header">
         <h2>Dashboard</h2>
