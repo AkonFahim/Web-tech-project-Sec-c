@@ -1,3 +1,4 @@
+// Antu
 function createModal(message, isConfirm = false, onConfirm = null) {
   // Check if a modal already exists to prevent duplicates
   if (document.getElementById('custom-modal')) {
