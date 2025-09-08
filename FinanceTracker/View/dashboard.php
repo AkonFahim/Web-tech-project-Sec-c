@@ -69,7 +69,7 @@ mysqli_close($con);
   <link rel="stylesheet" href="../Asset/savings-section.css">
   <link rel="stylesheet" href="../Asset/debt-section.css">
   <link rel="stylesheet" href="../Asset/tax-section.css">
-  <link rel="stylesheet" href="../Asset/export-section.css?v=1.0.0">
+  <link rel="stylesheet" href="../Asset/exports-section.css?v=1.0.0">
   <link rel="stylesheet" href="../Asset/settings-section.css">
   <link rel="stylesheet" href="../Asset/account-section.css">
 </head>
@@ -988,7 +988,118 @@ mysqli_close($con);
 <div id="export-data-section" class="finance-content-section">
   <div class="finance-export-section-container">
     <h4 class="finance-export-section-header"></h4>
-    <!-- Export Data section code here -->
+            <!-- Export Data section code here -->
+              <div class="container">
+        <div class="section-card">
+            <h4>Export Data</h4>
+            <div class="card-grid">
+                <div class="card-item">
+                    <h5>Export Options</h5>
+                    <div class="option-item" data-format="CSV">
+                        <div class="option-icon"><i class="fas fa-file-csv"></i></div>
+                        <div class="option-info">
+                            <h6>CSV Export</h6>
+                            <p>Comma-separated values for spreadsheets</p>
+                        </div>
+                        <button class="export-btn">Export</button>
+                    </div>
+                    <div class="option-item" data-format="PDF">
+                        <div class="option-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="option-info">
+                            <h6>PDF Report</h6>
+                            <p>Formatted PDF document for printing</p>
+                        </div>
+                        <button class="export-btn">Export</button>
+                    </div>
+                    <div class="option-item" data-format="QuickBooks">
+                        <div class="option-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="option-info">
+                            <h6>QuickBooks Format</h6>
+                            <p>QBO file for accounting software</p>
+                        </div>
+                        <button class="export-btn">Export</button>
+                    </div>
+                </div>
+                <div class="card-item">
+                    <h5>Export Settings</h5>
+                    <div class="setting-group">
+                        <label class="setting-label">Date Range</label>
+                        <select class="setting-input" id="date-range-select">
+                            <option value="">Select a date range</option>
+                            <option>Last 30 Days</option>
+                            <option>Last 90 Days</option>
+                            <option>This Year</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label class="setting-label">Data Type</label>
+                        <select class="setting-input" id="data-type-select">
+                            <option value="">Select data type</option>
+                            <option>All Transactions</option>
+                            <option>Income Only</option>
+                            <option>Expenses Only</option>
+                            <option>Tax-Related Only</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label class="setting-label">Include</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox"> Categories</label>
+                            <label class="checkbox-label"><input type="checkbox"> Tags</label>
+                            <label class="checkbox-label"><input type="checkbox"> Notes</label>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label class="setting-label">Encryption</label>
+                        <select class="setting-input" id="encryption-select">
+                            <option value="">Select encryption type</option>
+                            <option>None</option>
+                            <option>Password Protection</option>
+                            <option>Encrypt File</option>
+                        </select>
+                    </div>
+                    <button class="export-btn" id="export-settings-btn" style="align-self: flex-end;">Export with Settings</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h5>Export History</h5>
+            <div class="history-list" id="export-history-list">
+                </div>
+        </div>
+
+        <div class="section-card">
+            <h5>Scheduled Exports</h5>
+            <div class="schedule-form">
+                <div class="setting-group">
+                    <label class="setting-label">Schedule Type</label>
+                    <select class="setting-input" id="schedule-type-select">
+                        <option value="">Select schedule type</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                        <option>Quarterly</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label">Format</label>
+                    <select class="setting-input" id="schedule-format-select">
+                        <option value="">Select format</option>
+                        <option>CSV</option>
+                        <option>PDF</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label">Email to</label>
+                    <input type="email" class="setting-input" id="schedule-email-input" placeholder="email@example.com">
+                </div>
+                <button class="save-schedule-btn">Save Schedule</button>
+            </div>
+            <div id="scheduled-list-container" class="schedule-list">
+                </div>
+        </div>
+    </div>
   </div>
 </div>
 
@@ -1093,7 +1204,7 @@ mysqli_close($con);
   <script src="../Asset/savings-section.js"></script>
   <script src="../Asset/debt-section.js"></script>
   <script src="../Asset/tax-section.js"></script>
-  <script src="../Asset/export-section.js"></script>
+  <script src="../Asset/exports-section.js"></script>
   <script src="../Asset/settings-section.js"></script>
   <script src="../Asset/account-section.js"></script>
 
