@@ -1,3 +1,4 @@
+/* Antu */
 body {
       background-color: #f3f4f6;
       font-family: 'Inter', sans-serif;
@@ -40,6 +41,7 @@ body {
       display: block;
       font-weight: 500;
       margin-bottom: 0.5rem;
+
     }
     .finance-savings-form-input {
       width: 100%;
@@ -55,6 +57,8 @@ body {
       padding-right: 0.5rem;
       color: #6b7280;
     }
+
+
     .finance-creategoal-btn {
       width: 100%;
       padding: 0.75rem;
