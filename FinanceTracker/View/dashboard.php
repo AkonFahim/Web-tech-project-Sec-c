@@ -114,9 +114,7 @@ mysqli_close($con);
   <a href="#" class="finance-sidebar-menu-item-link" data-section="bill-reminders-section">
     <i class="fas fa-calendar-alt finance-sidebar-menu-item-icon"></i> <span>Bill Reminders</span>
   </a>
-  <a href="#" class="finance-sidebar-menu-item-link" data-section="reports-section">
-    <i class="fas fa-chart-line finance-sidebar-menu-item-icon"></i> <span>Reports</span>
-  </a>
+  
   <a href="#" class="finance-sidebar-menu-item-link" data-section="savings-goals-section">
     <i class="fas fa-piggy-bank finance-sidebar-menu-item-icon"></i> <span>Savings Goals</span>
   </a>
@@ -163,73 +161,57 @@ mysqli_close($con);
     </div>
 
     <div class="finance-page-content-container">
-      <!-- Dashboard Section -->
+<!-- Dashboard Section -->
       <div id="dashboard-section" class="finance-content-section active-content-section">
-        <div class="finance-dashboard-header">
-          <p>Overview of your financial health</p>
-        </div>
-        
-        <!-- Summary Cards -->
-        <div class="finance-summary-cards-container">
-          <div class="finance-summary-card">
+    <div class="finance-dashboard-header">
+        <p>Overview of your financial health</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="finance-summary-cards-container">
+        <div class="finance-summary-card">
             <div class="finance-card-icon finance-savings-icon"><i class="fas fa-piggy-bank"></i></div>
             <div class="finance-card-content">
-              <div class="finance-card-value" id="balanceDisplay"></div>
-              <div class="finance-card-label">Balance</div>
+                <div class="finance-card-value" id="balanceDisplay"></div>
+                <div class="finance-card-label">Balance</div>
             </div>
-          </div>
-        
-          <div class="finance-summary-card">
+        </div>
+
+        <div class="finance-summary-card">
             <div class="finance-card-icon finance-income-icon"><i class="fas fa-money-bill-wave"></i></div>
             <div class="finance-card-content">
-              <div class="finance-card-value" id="totalIncomeDisplay"></div>
-              <div class="finance-card-label">Total Income</div>
+                <div class="finance-card-value" id="totalIncomeDisplay"></div>
+                <div class="finance-card-label">Total Income</div>
             </div>
-          </div>
-          
-          <div class="finance-summary-card">
+        </div>
+
+        <div class="finance-summary-card">
             <div class="finance-card-icon finance-expenses-icon"><i class="fas fa-credit-card"></i></div>
             <div class="finance-card-content">
-              <div class="finance-card-value" id="totalExpensesDisplay"></div>
-              <div class="finance-card-label">Total Expenses</div>
+                <div class="finance-card-value" id="totalExpensesDisplay"></div>
+                <div class="finance-card-label">Total Expenses</div>
             </div>
-          </div>
-          
-          <div class="finance-summary-card">
-            <div class="finance-card-icon finance-budget-icon"><i class="fas fa-chart-pie"></i></div>
-            <div class="finance-card-content">
-              <div class="finance-card-value">82%</div>
-              <div class="finance-card-label">Budget Goal Progress</div>
-            </div>
-          </div>
         </div>
+
         
-        <!-- Charts and Visualizations -->
-        <div class="finance-charts-container">
-          <div class="finance-chart-card">
+
+    <!-- Charts and Visualizations -->
+    <div class="finance-charts-container">
+        <div class="finance-chart-card">
             <div class="finance-chart-header">
-              <h3>Income vs Expenses</h3>
-              <select class="finance-chart-period-selector" id="incomeExpensePeriod">
-                <option>Last 7 Days</option>
-                <option selected>Last 30 Days</option>
-                <option>Last 90 Days</option>
-              </select>
+                <h3>Income vs Expenses</h3>
+                <select class="finance-chart-period-selector" id="incomeExpensePeriod">
+                    <option>Last 7 Days</option>
+                    <option selected>Last 30 Days</option>
+                    <option>Last 90 Days</option>
+                </select>
             </div>
             <canvas id="incomeExpenseChart"></canvas>
-          </div>
-          
-          <div class="finance-chart-card">
-            <div class="finance-chart-header">
-              <h3>Spending by Category</h3>
-              <select class="finance-chart-period-selector" id="spendingCategoryPeriod">
-                <option>Last 7 Days</option>
-                <option selected>Last 30 Days</option>
-                <option>Last 90 Days</option>
-              </select>
-            </div>
-            <canvas id="spendingCategoryChart"></canvas>
-          </div>
         </div>
+
+        
+    </div>
+
         
         <!-- Recent Transactions -->
         <div class="finance-recent-transactions-container">
@@ -237,6 +219,23 @@ mysqli_close($con);
             <h3>Recent Transactions</h3>
             <button class="finance-view-all-button">View All</button>
           </div>
+          <div class="finance-recent-transactions finance-card">
+    <h4 class="finance-recent-transactions-header">Recent Transactions</h4>
+    <div class="finance-recent-transactions-table-container">
+        <table class="finance-recent-transactions-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="recentTransactionsTableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
           
           <div class="finance-transactions-list" id="recentTransactionsList">
             <!-- Transactions will be loaded via JavaScript -->
@@ -600,14 +599,7 @@ mysqli_close($con);
 </div>
 
 
-      <!-- Reports Section -->
-      <div id="reports-section" class="finance-content-section">
-        <div class="finance-report-section-container">
-          <h4 class="finance-report-section-header">Financial Reports</h4>
-          <!-- Reports section code here -->
-        </div>
-      </div>
-
+     
 
 
         <!-- Savings Goals Section -->
@@ -965,6 +957,7 @@ mysqli_close($con);
   <script src="../Asset/expense-section.js"></script>
   <script src="../Asset/budget-section.js"></script>
   <script src="../Asset/billreminder-section.js"></script>
+  <script src="../Asset/report-section.js"></script>
   <script src="../Asset/report-section.js"></script>
   
   <script src="../Asset/savings-section.js"></script>
