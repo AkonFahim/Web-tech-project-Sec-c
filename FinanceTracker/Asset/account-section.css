@@ -1,0 +1,137 @@
+/* Account Linking Section */
+#account-linking-section {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Common Screen Styles */
+.screen {
+  display: none; /* Screens are hidden by default and shown via JavaScript */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.screen h2 {
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+.screen p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Bank Connection Wizard Screen */
+#bank-connection-wizard {
+  display: block; /* Example: This screen is shown by default */
+}
+
+.connection-placeholder {
+  text-align: center;
+  padding: 40px;
+  border: 2px dashed #ccc;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.connection-placeholder button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.connection-placeholder button:hover {
+  background-color: #0056b3;
+}
+
+/* Sync Status Screen */
+.account-list {
+  list-style: none;
+  padding: 0;
+}
+
+.account-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.account-list li:last-child {
+  border-bottom: none;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.synced {
+  color: #28a745; /* Green */
+}
+
+.status.syncing {
+  color: #ffc107; /* Yellow/Orange */
+}
+
+.status.error {
+  color: #dc3545; /* Red */
+}
+
+.sync-frequency-options label {
+  display: inline-block;
+  margin-right: 15px;
+  font-weight: normal;
+}
+
+.sync-frequency-options input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Error Resolver Screen */
+.error-list {
+  margin-top: 20px;
+}
+
+.error-item {
+  border: 1px solid #dc3545;
+  border-left: 5px solid #dc3545;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background-color: #fff3f3;
+}
+
+.error-item h3 {
+  color: #dc3545;
+  margin-top: 0;
+}
+
+.error-item button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error-item button:hover {
+  background-color: #c82333;
+}
