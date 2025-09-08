@@ -1,144 +1,224 @@
-   let nameError = document.getElementById("nameError");
-    let emailError = document.getElementById("emailError");
-    let messageError = document.getElementById("messageError");
-    let captchaError = document.getElementById("captchaError");
-    let success = document.getElementById("success");
 
-    function validateName() {
-      let name = document.getElementById("name").value.trim();
-      let words = name.split(" ").filter(word => word !== "");
-      if (name === "") { 
-        nameError.textContent = "Name cannot be empty"; 
-        nameError.style.display = "block";
-        return false; 
-      } 
-      else if (words.length < 2) { 
-        nameError.textContent = "Contains at least two words"; 
-        nameError.style.display = "block";
-        return false; 
-      } 
-      else {
-        let firstChar = name.charCodeAt(0);
-        if (!((firstChar >= 65 && firstChar <= 90) || (firstChar >= 97 && firstChar <= 122))) {
-          nameError.textContent = "Name must start with a letter"; 
-          nameError.style.display = "block";
-          return false;
+const incomeTransactions = [];  // In-memory storage for income transactions
+const expenseTransactions = []; // In-memory storage for expense transactions
+
+
+// ------------------- Income Section -------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const saveIncomeButton = document.getElementById('saveIncome');
+    const incomeForm = document.getElementById('incomeForm');
+    const incomeMessage = document.getElementById('incomeMessage');
+    const incomeHistory = document.getElementById('incomeHistory');
+
+    // Add event listener to "Add Income" button
+    saveIncomeButton.addEventListener('click', function() {
+        if (!incomeForm.checkValidity()) {
+            incomeForm.reportValidity();
+            return;
         }
-        for (let i = 0; i < name.length; i++) {
-          let ch = name.charCodeAt(i);
-          if (ch >= 48 && ch <= 57) { 
-            nameError.textContent = "Name cannot contain numbers"; 
-            nameError.style.display = "block";
-            return false; 
-          }
-        }
-      }
-      nameError.style.display = "none"; 
-      return true;
-    }
 
-    function validateEmail() {
-      let email = document.getElementById("email").value.trim();
-      if (email === "") { 
-        emailError.textContent = "Email cannot be empty"; 
-        emailError.style.display = "block";
-        return false; 
-      }
-      let atPos = email.indexOf("@");
-      let dotPos = email.lastIndexOf(".");
-      if (!email.includes('@') || !email.endsWith('.com') || dotPos !== email.indexOf(".com")) {
-        emailError.textContent = "Enter Valid Email"; 
-        emailError.style.display = "block";
-        return false;
-      }
-      let domain = email.substring(atPos + 1, dotPos);
-      if (domain.length < 1) { 
-        emailError.textContent = "Enter Valid Email"; 
-        emailError.style.display = "block";
-        return false; 
-      }
-      let firstCom = email.indexOf(".com");
-      let lastCom = email.lastIndexOf(".com");
-      if (firstCom !== lastCom) { 
-        emailError.textContent = "Enter Valid Email"; 
-        emailError.style.display = "block";
-        return false; 
-      }
-      emailError.style.display = "none"; 
-      return true;
-    }
+        const amount = parseFloat(document.getElementById('incomeAmount').value);
+        const description = document.getElementById('incomeDescription').value;
+        const category = document.getElementById('incomeCategory').value;
+        const date = document.getElementById('incomeDate').value;
 
-    function validateMessage() {
-      let message = document.getElementById("message").value.trim();
-      if (message === "") { 
-        messageError.textContent = "Message cannot be empty"; 
-        messageError.style.display = "block";
-        return false; 
-      } 
-      else if (message.length < 10) { 
-        messageError.textContent = "Message must be at least 10 characters"; 
-        messageError.style.display = "block";
-        return false; 
-      } 
-      else if (message.length > 300) { 
-        messageError.textContent = "Message cannot be more than 300 characters"; 
-        messageError.style.display = "block";
-        return false; 
-      }
-      messageError.style.display = "none"; 
-      return true;
-    }
+        const income = { id: Date.now().toString(), amount, description, category, date };
+        incomeTransactions.push(income);
 
-    let captchaAnswer = "";
-    function generateCaptcha() {
-      let num1 = Math.floor(Math.random() * 10 + 1);
-      let num2 = Math.floor(Math.random() * 10 + 1);
-      captchaAnswer = num1 + num2;
-      document.getElementById("captcha-question").textContent = `${num1} + ${num2}`;
-    }
-    
-    function validateCaptcha() {
-      let userAnswer = document.getElementById("captcha").value.trim();
-      if (userAnswer === "") { 
-        captchaError.textContent = "Captcha cannot be empty"; 
-        captchaError.style.display = "block";
-        return false; 
-      }
-      if (parseInt(userAnswer) !== captchaAnswer) {
-        captchaError.textContent = "Incorrect answer. Try again!"; 
-        captchaError.style.display = "block";
-        generateCaptcha(); 
-        return false;
-      }
-      captchaError.style.display = "none"; 
-      return true;
-    }
+        incomeMessage.textContent = 'Income added successfully!';
+        incomeMessage.className = 'finance-income-message success';
 
-    function validateForm() {
-      success.style.display = "none";
-      let isNameValid = validateName();
-      let isEmailValid = validateEmail();
-      let isMessageValid = validateMessage();
-      let isCaptchaValid = validateCaptcha();
-      
-      if (isNameValid && isEmailValid && isMessageValid && isCaptchaValid) {
-        success.textContent = "Message sent successfully!";
-        success.style.display = "block";
-        document.getElementById("name").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("message").value = "";
-        document.getElementById("captcha").value = "";
-        generateCaptcha();
-        return false;
-      }
-      return false;
-    }
-
-    document.getElementById("contactForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      validateForm();
+        incomeForm.reset();
+        loadIncomeHistory();
+        updateDashboardTotals();
+        setTimeout(() => {
+            incomeMessage.textContent = '';
+            incomeMessage.className = 'finance-income-message';
+        }, 3000);
     });
 
-    window.onload = function() {
-      generateCaptcha();
-    };
+    function loadIncomeHistory() {
+        incomeHistory.innerHTML = '';
+
+        if (incomeTransactions.length === 0) {
+            incomeHistory.innerHTML = '<tr><td colspan="5">No income records found</td></tr>';
+            return;
+        }
+
+        incomeTransactions.forEach(income => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${new Date(income.date).toLocaleDateString()}</td>
+                <td>${income.description}</td>
+                <td>${income.category}</td>
+                <td>$${income.amount.toFixed(2)}</td>
+                <td>
+                    <button class="finance-delete-btn" data-id="${income.id}">Delete</button>
+                </td>
+            `;
+            incomeHistory.appendChild(row);
+        });
+
+        document.querySelectorAll('.finance-delete-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                deleteIncome(e.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function deleteIncome(id) {
+        const index = incomeTransactions.findIndex(i => i.id == id);
+        if (index !== -1) {
+            incomeTransactions.splice(index, 1);  // Remove transaction
+            loadIncomeHistory();  // Reload the history table
+            updateDashboardTotals();  // Update totals after deleting
+        }
+    }
+
+    function updateDashboardTotals() {
+        const totalIncome = incomeTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+        const totalExpenses = expenseTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+        const balance = totalIncome - totalExpenses;
+
+        document.getElementById('totalIncomeDisplay').textContent = `$${totalIncome.toFixed(2)}`;
+        document.getElementById('totalExpensesDisplay').textContent = `$${totalExpenses.toFixed(2)}`;
+        document.getElementById('balanceDisplay').textContent = `$${balance.toFixed(2)}`;
+
+        updateCharts(totalIncome, totalExpenses);
+    }
+
+
+});
+
+// ------------------- Expense Section -------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const saveExpenseButton = document.getElementById('saveExpense');
+    const expenseForm = document.getElementById('expenseForm');
+    const expenseMessage = document.getElementById('expenseMessage');
+    const expenseHistory = document.getElementById('expenseHistory');
+
+    // Add event listener to "Add Expense" button
+    saveExpenseButton.addEventListener('click', function() {
+        if (!expenseForm.checkValidity()) {
+            expenseForm.reportValidity();
+            return;
+        }
+
+        const amount = parseFloat(document.getElementById('expenseAmount').value);
+        const description = document.getElementById('expenseDescription').value;
+        const category = document.getElementById('expenseCategory').value;
+        const date = document.getElementById('expenseDate').value;
+
+        const expense = { id: Date.now().toString(), amount, description, category, date };
+        expenseTransactions.push(expense);
+
+        expenseMessage.textContent = 'Expense added successfully!';
+        expenseMessage.className = 'finance-expense-message success';
+
+        expenseForm.reset();
+        loadExpenseHistory();
+        updateDashboardTotals();
+        setTimeout(() => {
+            expenseMessage.textContent = '';
+            expenseMessage.className = 'finance-expense-message';
+        }, 3000);
+    });
+
+    function loadExpenseHistory() {
+        expenseHistory.innerHTML = '';
+
+        if (expenseTransactions.length === 0) {
+            expenseHistory.innerHTML = '<tr><td colspan="5">No expense records found</td></tr>';
+            return;
+        }
+
+        expenseTransactions.forEach(expense => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${new Date(expense.date).toLocaleDateString()}</td>
+                <td>${expense.description}</td>
+                <td>${expense.category}</td>
+                <td>$${expense.amount.toFixed(2)}</td>
+                <td>
+                    <button class="finance-delete-btn" data-id="${expense.id}">Delete</button>
+                </td>
+            `;
+            expenseHistory.appendChild(row);
+        });
+
+        document.querySelectorAll('.finance-delete-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                deleteExpense(e.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function deleteExpense(id) {
+        const index = expenseTransactions.findIndex(e => e.id == id);
+        if (index !== -1) {
+            expenseTransactions.splice(index, 1);  // Remove transaction
+            loadExpenseHistory();  // Reload the history table
+            updateDashboardTotals();  // Update totals after deleting
+        }
+    }
+
+    function updateDashboardTotals() {
+        const totalIncome = incomeTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+        const totalExpenses = expenseTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+        const balance = totalIncome - totalExpenses;
+
+        document.getElementById('totalIncomeDisplay').textContent = `$${totalIncome.toFixed(2)}`;
+        document.getElementById('totalExpensesDisplay').textContent = `$${totalExpenses.toFixed(2)}`;
+        document.getElementById('balanceDisplay').textContent = `$${balance.toFixed(2)}`;
+
+        updateCharts(totalIncome, totalExpenses);
+    }
+
+    function updateCharts(totalIncome, totalExpenses) {
+        const incomeExpenseCtx = document.getElementById('incomeExpenseChart');
+        if (incomeExpenseCtx) {
+            new Chart(incomeExpenseCtx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Current'],
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: [totalIncome],
+                            backgroundColor: '#2ecc71',
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [totalExpenses],
+                            backgroundColor: '#e74c3c',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'top' } }
+                }
+            });
+        }
+
+        const spendingCategoryCtx = document.getElementById('spendingCategoryChart');
+        if (spendingCategoryCtx) {
+            new Chart(spendingCategoryCtx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Housing', 'Food', 'Transportation', 'Entertainment', 'Utilities', 'Other'],
+                    datasets: [{
+                        data: [300, 500, 200, 100, 150, 50],  // Dummy data
+                        backgroundColor: [
+                            '#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#34495e'
+                        ],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'right' } }
+                }
+            });
+        }
+    }
+});
