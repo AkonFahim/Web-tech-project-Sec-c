@@ -71,6 +71,7 @@ mysqli_close($con);
   <link rel="stylesheet" href="../Asset/tax-section.css">
   <link rel="stylesheet" href="../Asset/export-section.css?v=1.0.0">
   <link rel="stylesheet" href="../Asset/settings-section.css">
+  <link rel="stylesheet" href="../Asset/account-section.css">
 </head>
 
 <body class="finance-body-default-style">
@@ -135,8 +136,8 @@ mysqli_close($con);
   <a href="#" class="finance-sidebar-menu-item-link" data-section="settings-section">
     <i class="fas fa-cog finance-sidebar-menu-item-icon"></i> <span>Settings</span>
   </a>
-  <a href="#" class="finance-sidebar-menu-item-link " data-section="dashboard-section">
-    <i class="fas fa-user finance-sidebar-menu-item-icon"></i> <span>Profile</span>
+  <a href="#" class="finance-sidebar-menu-item-link " data-section="account-section">
+    <i class="fas fa-bank finance-sidebar-menu-item-icon"></i> <span>Your Accounts</span>
   </a>
   <a href="#" class="finance-sidebar-menu-item-link" id="logoutLink">
     <i class="fas fa-sign-out-alt finance-sidebar-menu-item-icon"></i> <span>Logout</span>
@@ -1000,8 +1001,72 @@ mysqli_close($con);
     </h4>
     <!-- Settings section code here -->
   </div>
+</div>
+
+ <!-- account Section -->
+<div id="account-section" class="finance-content-section">
+  <div class="finance-settings-section-container">
+    <h4 class="finance-settings-section-header">
+   
+    </h4>
+    <div id="account-linking-section">
+
+  <div id="bank-connection-wizard" class="screen">
+    <h2>Bank Connection Wizard</h2>
+    <p>Connect your checking, savings, or credit accounts to sync your financial data.</p>
+    <div class="connection-placeholder">
+      <p>Click here to connect your bank account.</p>
+      <button>Connect Account</button>
+    </div>
   </div>
 
+  <div id="sync-status" class="screen">
+    <h2>Sync Status</h2>
+    <p>View the status of your connected accounts.</p>
+    <ul class="account-list">
+      <li>
+        <span>Bank of America Checking</span>
+        <span class="status synced">Synced 1 hour ago</span>
+      </li>
+      <li>
+        <span>Chase Freedom Credit Card</span>
+        <span class="status syncing">Syncing now...</span>
+      </li>
+      <li>
+        <span>Wells Fargo Savings</span>
+        <span class="status error">Error: Re-authenticate</span>
+      </li>
+    </ul>
+
+    <h3>Sync Frequency</h3>
+    <p>Control how often your accounts sync.</p>
+    <div class="sync-frequency-options">
+      <label><input type="radio" name="sync-frequency" value="daily" checked> Daily</label>
+      <label><input type="radio" name="sync-frequency" value="weekly"> Weekly</label>
+      <label><input type="radio" name="sync-frequency" value="manual"> Manual</label>
+    </div>
+  </div>
+
+  <div id="error-resolver" class="screen">
+    <h2>Error Resolver</h2>
+    <p>Fix issues with your account connections.</p>
+    <div class="error-list">
+      <div class="error-item">
+        <h3>Capital One Quicksilver</h3>
+        <p>Your connection has expired. Please log in again to fix it.</p>
+        <button>Fix Connection</button>
+      </div>
+      <div class="error-item">
+        <h3>Discover It Card</h3>
+        <p>Incorrect credentials. Please update your login information.</p>
+        <button>Update Credentials</button>
+      </div>
+    </div>
+   </div>
+
+   </div>
+   </div>
+   </div>
 
   <script>
   window.financeData = {
@@ -1030,6 +1095,7 @@ mysqli_close($con);
   <script src="../Asset/tax-section.js"></script>
   <script src="../Asset/export-section.js"></script>
   <script src="../Asset/settings-section.js"></script>
+  <script src="../Asset/account-section.js"></script>
 
 </body>
 </html>
