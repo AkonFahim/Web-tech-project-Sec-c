@@ -1106,12 +1106,123 @@ mysqli_close($con);
 
      <!-- Settings Section -->
 <div id="settings-section" class="finance-content-section">
-  <div class="finance-settings-section-container">
-    <h4 class="finance-settings-section-header">
-    Settings
-    </h4>
-    <!-- Settings section code here -->
-  </div>
+    <div class="finance-settings-section-container">
+        <h4 class="finance-settings-section-header">Settings</h4>
+        <div class="finance-settings-content">
+            <div class="finance-settings-cards-container">
+                <div class="finance-settings-card">
+                    <div class="finance-settings-card-header">
+                        <h5>Account Settings</h5>
+                    </div>
+                    <div class="finance-settings-form">
+                        <div class="finance-settings-form-group">
+                            <label class="finance-settings-form-label" for="emailInput">Email Address</label>
+                            <input type="email" class="finance-settings-form-input" id="emailInput" placeholder="Enter your email">
+                        </div>
+                        <div class="finance-settings-form-group">
+                            <label class="finance-settings-form-label" for="currencySelect">Currency</label>
+                            <select class="finance-settings-form-input" id="currencySelect">
+                                <option value="" disabled selected>Select currency...</option>
+                                <option>USD ($)</option>
+                                <option>EUR (€)</option>
+                                <option>GBP (£)</option>
+                                <option>JPY (¥)</option>
+                                <option>BDT (৳)</option>
+                            </select>
+                        </div>
+                        <div class="finance-settings-form-group">
+                            <label class="finance-settings-form-label" for="dateInput">Date</label>
+                            <input type="text" class="finance-settings-form-input" id="dateInput" placeholder="YYYY-MM-DD">
+                        </div>
+                        <div class="finance-settings-form-group">
+                            <label class="finance-settings-form-label" for="languageSelect">Language</label>
+                            <select class="finance-settings-form-input" id="languageSelect">
+                                <option value="" disabled selected>Select language...</option>
+                                <option>English</option>
+                                <option>Spanish</option>
+                                <option>French</option>
+                                <option>German</option>
+                                <option>Bengali</option>
+                            </select>
+                        </div>
+                        <button class="finance-saveaccountsettings-btn" id="saveAccountBtn">Save Changes</button>
+                    </div>
+                    <div id="accountOutput" class="output-box"></div>
+                </div>
+                
+                <div class="finance-settings-card">
+                    <div class="finance-settings-card-header">
+                        <h5>Notification Settings</h5>
+                    </div>
+                    <div class="finance-settings-notifications">
+                        <div class="finance-settings-notification-group">
+                            <label class="finance-settings-notification-label">
+                                <input type="checkbox" id="billReminders"> Bill Reminders
+                            </label>
+                            <p>Get notified before bills are due</p>
+                        </div>
+                        <div class="finance-settings-notification-group">
+                            <label class="finance-settings-notification-label">
+                                <input type="checkbox" id="budgetAlerts"> Budget Alerts
+                            </label>
+                            <p>Get notified when approaching budget limits</p>
+                        </div>
+                        <div class="finance-settings-notification-group">
+                            <label class="finance-settings-notification-label">
+                                <input type="checkbox" id="weeklyReports"> Weekly Reports
+                            </label>
+                            <p>Receive weekly financial summary emails</p>
+                        </div>
+                        <div class="finance-settings-notification-group">
+                            <label class="finance-settings-notification-label">
+                                <input type="checkbox" id="securityAlerts"> Security Alerts
+                            </label>
+                            <p>Get notified of suspicious activity</p>
+                        </div>
+                        <button class="finance-savenotificationsettings-btn" id="saveNotificationBtn">Save Changes</button>
+                    </div>
+                    <div id="notificationOutput" class="output-box"></div>
+                </div>
+            </div>
+            
+            <div class="finance-settings-privacy-container">
+                <h5>Privacy & Security</h5>
+                <div class="finance-settings-privacy-options">
+                    <div class="finance-settings-privacy-option">
+                        <h6>Data Export</h6>
+                        <p>Download all your data</p>
+                        <button class="finance-exportalldata-btn" id="exportDataBtn">Export All Data</button>
+                    </div>
+                    
+                    <div class="finance-settings-privacy-option">
+                        <h6>Account Deletion</h6>
+                        <p>Permanently delete your account and all data</p>
+                        <button class="finance-deleteaccount-btn" id="deleteAccountBtn">Delete Account</button>
+                    </div>
+                    
+                    <div class="finance-settings-privacy-option">
+                        <h6>Two-Factor Authentication</h6>
+                        <p>Add an extra layer of security to your account</p>
+                        <button class="finance-setup2fa-btn" id="setup2FABtn">Set Up 2FA</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="finance-settings-about-container">
+                <h5>About Finance Tracker</h5>
+                <div class="finance-settings-about-content">
+                    <p>Version 1.0.0</p>
+                    <p>© 2024 Finance Tracker. All rights reserved.</p>
+                    <div class="finance-settings-about-links">
+                        <a href="#" class="finance-about-link">Privacy Policy</a>
+                        <a href="#" class="finance-about-link">Terms of Service</a>
+                        <a href="#" class="finance-about-link">Support</a>
+                        <a href="#" class="finance-about-link">Feedback</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
  <!-- account Section -->
