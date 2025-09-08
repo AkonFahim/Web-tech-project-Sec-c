@@ -1,0 +1,155 @@
+body {
+      background-color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+    }
+    .finance-content-section {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .finance-savings-section-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+    .finance-savings-cards-container {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .finance-savings-cards-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .finance-savings-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+    }
+    .finance-savings-card-header {
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    .finance-savings-form-group {
+      margin-bottom: 1rem;
+    }
+    .finance-savings-form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .finance-savings-form-input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+    }
+    .finance-savings-input-group {
+      display: flex;
+      align-items: center;
+    }
+    .finance-savings-input-prefix {
+      padding-right: 0.5rem;
+      color: #6b7280;
+    }
+    .finance-creategoal-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #3b82f6;
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    .finance-creategoal-btn:hover {
+      background-color: #2563eb;
+    }
+    .finance-savings-summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .finance-savings-summary-label {
+      font-weight: 500;
+      color: #6b7280;
+    }
+    .finance-savings-summary-value {
+      font-weight: bold;
+      color: #1f2937;
+    }
+    .finance-savings-overall-progress {
+      margin-top: 1rem;
+    }
+    .finance-savings-progress-bar {
+      width: 100%;
+      height: 0.75rem;
+      background-color: #e5e7eb;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .finance-savings-progress-fill {
+      height: 100%;
+      background-color: #10b981;
+      transition: width 0.3s ease-in-out;
+    }
+    .finance-savings-goals-container {
+      margin-top: 2rem;
+    }
+    .finance-savings-goals-container h5 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .finance-savings-goal-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .finance-savings-goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .finance-savings-goal-name {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .finance-savings-goal-delete-btn {
+      color: #ef4444;
+      font-size: 0.875rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-weight: 500;
+    }
+    .finance-savings-goal-info {
+      font-size: 0.875rem;
+      color: #4b5563;
+    }
+    .finance-savings-goal-progress {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    .finance-savings-progress-percent {
+      margin-left: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .finance-savings-goal-date {
+        margin-top: 1rem;
+    }
+    #custom-modal {
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
