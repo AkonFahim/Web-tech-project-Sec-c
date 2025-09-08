@@ -161,18 +161,18 @@ mysqli_close($con);
     </div>
 
     <div class="finance-page-content-container">
-<!-- Dashboard Section -->
-      <div id="dashboard-section" class="finance-content-section active-content-section">
+   <!-- Dashboard Section -->
+ <div id="dashboard-section" class="finance-content-section active-content-section">
     <div class="finance-dashboard-header">
+        <h2>Dashboard</h2>
         <p>Overview of your financial health</p>
     </div>
 
-    <!-- Summary Cards -->
     <div class="finance-summary-cards-container">
         <div class="finance-summary-card">
             <div class="finance-card-icon finance-savings-icon"><i class="fas fa-piggy-bank"></i></div>
             <div class="finance-card-content">
-                <div class="finance-card-value" id="balanceDisplay"></div>
+                <div class="finance-card-value" id="balanceDisplay">$0.00</div>
                 <div class="finance-card-label">Balance</div>
             </div>
         </div>
@@ -180,7 +180,7 @@ mysqli_close($con);
         <div class="finance-summary-card">
             <div class="finance-card-icon finance-income-icon"><i class="fas fa-money-bill-wave"></i></div>
             <div class="finance-card-content">
-                <div class="finance-card-value" id="totalIncomeDisplay"></div>
+                <div class="finance-card-value" id="totalIncomeDisplay">$0.00</div>
                 <div class="finance-card-label">Total Income</div>
             </div>
         </div>
@@ -188,14 +188,12 @@ mysqli_close($con);
         <div class="finance-summary-card">
             <div class="finance-card-icon finance-expenses-icon"><i class="fas fa-credit-card"></i></div>
             <div class="finance-card-content">
-                <div class="finance-card-value" id="totalExpensesDisplay"></div>
+                <div class="finance-card-value" id="totalExpensesDisplay">$0.00</div>
                 <div class="finance-card-label">Total Expenses</div>
             </div>
         </div>
+    </div>
 
-        
-
-    <!-- Charts and Visualizations -->
     <div class="finance-charts-container">
         <div class="finance-chart-card">
             <div class="finance-chart-header">
@@ -208,42 +206,33 @@ mysqli_close($con);
             </div>
             <canvas id="incomeExpenseChart"></canvas>
         </div>
-
-        
     </div>
-
-        
-        <!-- Recent Transactions -->
-        <div class="finance-recent-transactions-container">
-          <div class="finance-section-header">
+    
+    <div class="finance-recent-transactions-container">
+        <div class="finance-section-header">
             <h3>Recent Transactions</h3>
             <button class="finance-view-all-button">View All</button>
-          </div>
-          <div class="finance-recent-transactions finance-card">
-    <h4 class="finance-recent-transactions-header">Recent Transactions</h4>
-    <div class="finance-recent-transactions-table-container">
-        <table class="finance-recent-transactions-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody id="recentTransactionsTableBody">
-                </tbody>
-        </table>
+        </div>
+        <div class="finance-recent-transactions finance-card">
+            <div class="finance-recent-transactions-table-container">
+                <table class="finance-recent-transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentTransactionsTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-          
-          <div class="finance-transactions-list" id="recentTransactionsList">
-            <!-- Transactions will be loaded via JavaScript -->
-            <p class="finance-no-transactions-text">No recent transactions</p>
-          </div>
-        </div>
-      </div>
- <!-- income section -->
+    
+   <!-- income section -->
        <div id="income-section" class="finance-content-section">
         <div class="finance-income-section-container">
           <h4 class="finance-income-section-header">Income Management</h4>
