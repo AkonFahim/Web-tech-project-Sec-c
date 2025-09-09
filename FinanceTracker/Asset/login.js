@@ -34,13 +34,13 @@ loginForm.addEventListener('submit', function(e) {
     
     if (!email || !password) {
         e.preventDefault();
-        showError('Please fill in all fields');
+        showError('Please fill in all fields..');
         return;
     }
     
     if (!isValidEmail(email)) {
         e.preventDefault();
-        showError('Please enter a valid email address');
+        showError('Please enter a valid email address..');
         return;
     }
     
@@ -49,7 +49,7 @@ loginForm.addEventListener('submit', function(e) {
       setTimeout(() => {
         signinBtn.innerHTML = 'Sign In';
         signinBtn.disabled = false;
-        window.location.href = 'dashboard.html';
+        window.location.href = '../View/dashboard.php';
     }, 1000);
 });
 
