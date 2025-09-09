@@ -1,9 +1,14 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 include '../Model/db_connection.php';
 include '../Controller/username_generator.php';
 
 $err1 = $err2 = $err3 = $err4 = '';
+$fullName = $email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = trim($_POST['fullName']);
@@ -13,7 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
         $err1 = "Please fill in all fields";
-    } else {
+    } 
+    elseif (!isValidEmail($email)) {
+        $err2 = "Please enter a valid email address";
+    }
+    elseif (strlen($password) < 6) {
+        $err3 = "Password must be at least 6 characters";
+    }
+    elseif ($password !== $confirmPassword) {
+        $err4 = "Passwords do not match";
+    }
+    else {
         $sql = "SELECT id FROM users WHERE email = '$email'";
         $result = mysqli_query($con, $sql);
         
@@ -22,27 +37,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $username = generateUsername($fullName, $con);
             
-            if($password != $confirmPassword) {
-                $err3 = "Passwords do not match";
-            } 
-            else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (full_name, username, email, password, user_type) VALUES ('$fullName', '$username', '$email', '$hashedPassword', 'user')";
+            $sql = "INSERT INTO users (full_name, username, email, password, user_type) 
+                    VALUES ('$fullName', '$username', '$email', '$hashedPassword', 'user')";
             
             if(mysqli_query($con, $sql)){
-                mysqli_close($con);
                 $_SESSION['registration_success'] = "Account created successfully! Your username is: " . $username;
                 header('location: login.php');
                 exit();
             } else {
-                $err1 = "Registration failed. Please try again.";
+                $err1 = "Registration failed. Please try again. Error: " . mysqli_error($con);
             }
-          }
         }
     }
 }
 
 mysqli_close($con);
+
+function isValidEmail($email) {
+    if (strpos($email, '@') === false) {
+        return false;
+    }
+    
+    $parts = explode('@', $email);
+    $localPart = $parts[0];
+    $domain = $parts[1];
+    
+    if (empty($localPart) || empty($domain)) {
+        return false;
+    }
+    
+    if (strpos($domain, '.') === false) {
+        return false;
+    }
+    
+    $domainParts = explode('.', $domain);
+    if (count($domainParts) < 2 || empty($domainParts[0]) || empty($domainParts[1])) {
+        return false;
+    }
+    
+    if (strpos($email, ' ') !== false) {
+        return false;
+    }
+    
+    $tld = $domainParts[count($domainParts) - 1];
+    if (strlen($tld) < 2) {
+        return false;
+    }
+    
+    return true;
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,8 +98,6 @@ mysqli_close($con);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../Asset/register.css">
 </head>
-<body>
-  </head>
 <body>
   <div class="container">
     <div class="logo" onclick="window.location.href='landing.php'">
@@ -81,20 +123,20 @@ mysqli_close($con);
           <p>Join thousands managing their money smarter</p>
         </div>
         
-        <form method="post" action="register.php" id="registerForm">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" id="registerForm" novalidate>
           <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" id="fullName" name="fullName" placeholder="Full Name" required value="<?php echo isset($_POST['fullName']) ? htmlspecialchars($_POST['fullName']) : ''; ?>">
+            <input type="text" id="fullName" name="fullName" placeholder="Full Name"  value="<?php echo htmlspecialchars($fullName); ?>">
           </div>
           
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" id="regEmail" name="email" placeholder="Email Address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+            <input type="email" id="regEmail" name="email" placeholder="Email Address"  value="<?php echo htmlspecialchars($email); ?>">
           </div>
           
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="Password">
             <button type="button" class="toggle-password" id="togglePassword">
               <i class="fas fa-eye"></i>
             </button>
@@ -102,7 +144,7 @@ mysqli_close($con);
           
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
             <button type="button" class="toggle-password" id="toggleConfirmPassword">
               <i class="fas fa-eye"></i>
             </button>
@@ -139,6 +181,5 @@ mysqli_close($con);
   </div>
 
   <script src="../Asset/register.js"></script>
-</body>
 </body>
 </html>
