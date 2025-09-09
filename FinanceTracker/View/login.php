@@ -1,17 +1,22 @@
 <?php
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 session_start();
 if(isset($_SESSION['user_id'])) {
     header('location: dashboard.php');
     exit();
 }
+
+include '../Model/usersModel.php';
+
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_me']) && isset($_COOKIE['user_id'])) {
     include '../Controller/db_connection.php';
-    $user_id = $_COOKIE['user_id'];
-    $sql = "SELECT * FROM users WHERE id = '$user_id' AND status = 'active'";
-    $result = mysqli_query($con, $sql);
     
-    if (mysqli_num_rows($result) === 1) {
-        $user = mysqli_fetch_assoc($result);
+    $user = getActiveUserById($con, $_COOKIE['user_id']);
+    
+    if ($user) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['full_name'];
         $_SESSION['user_email'] = $user['email'];
@@ -25,12 +30,102 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_me']) && isset($_CO
 }
 
 $err1 = $err2 = '';
+$email = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    include '../Controller/db_connection.php';
+    
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    $remember = isset($_POST['remember']);
+    
+    if (empty($email) || empty($password)) {
+        $err1 = "Please fill in all fields!";
+    } 
+    elseif (!isValidEmail($email)) {
+        $err1 = "..Please enter a valid email address!";
+    }
+    else {
+        $user = getUserByEmail($con, $email);
+        
+        if ($user) {
+            if ($user['status'] === 'Blocked') {
+                session_unset();
+                session_destroy();
+                
+                if (isset($_COOKIE['remember_me'])) {
+                    setcookie('remember_me', '', time() - 3600, '/');
+                }
+                if (isset($_COOKIE['user_id'])) {
+                    setcookie('user_id', '', time() - 3600, '/');
+                }
+                
+                mysqli_close($con);
+                header('location: errors/blockeduser.php');
+                exit(); 
+            }
+            
+            elseif (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['full_name'];
+                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_type'] = $user['user_type'];
+                
+                if ($remember) {
+                    $cookie_expiry = time() + (7 * 24 * 60 * 60); // 7 days
+                    setcookie('user_id', $user['id'], $cookie_expiry, "/");
+                    setcookie('remember_me', 'true', $cookie_expiry, "/");
+                }
+                
+                mysqli_close($con);
+                
+                header('location: dashboard.php');
+                exit();
+            } else {
+                $err1 = "Invalid password!";
+            }
+        } else {
+            $err1 = "No account found with this email!";
+        }
+    }
+    
+    mysqli_close($con);
+}
+
+function isValidEmail($email) {
+    if (strpos($email, '@') === false) {
+        return false;
+    }
+    
+    $parts = explode('@', $email);
+    $localPart = $parts[0];
+    $domain = $parts[1];
+    
+    if (empty($localPart) || empty($domain)) {
+        return false;
+    }
+    
+    if (strpos($domain, '.') === false) {
+        return false;
+    }
+    
+    $domainParts = explode('.', $domain);
+    if (count($domainParts) < 2 || empty($domainParts[0]) || empty($domainParts[1])) {
+        return false;
+    }
+    
+    if (strpos($email, ' ') !== false) {
+        return false;
+    }
+    
+    return true;
+}
 
 if(isset($_REQUEST['error'])){
     $error = $_REQUEST['error'];
     
     if($error == "invalid_user"){
-        $err1 = "Please enter a valid email";
+        $err1 = "Please enter a valid User's email";
     } 
     elseif($error == "invalid_password") 
     {
@@ -48,9 +143,12 @@ if(isset($_REQUEST['error'])){
      {
         $err2 = "Your session has expired. Please login again.";
     }
+     elseif($error == "database_error")
+     {
+        $err2 = "A system error occurred. Please try again later.";
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,16 +184,15 @@ if(isset($_REQUEST['error'])){
           <p>Enter your credentials to continue</p>
         </div>
         
-        <form method="post" action="../Controller/loginCheck.php" id="loginForm">
+        <form method="post" action="../Controller/loginCheck.php" id="loginForm" novalidate>
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" id="loginEmail" name="email" placeholder="Email Address" required 
-                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : (isset($_GET['email']) ? htmlspecialchars($_GET['email']) : ''); ?>">
+            <input type="email" id="loginEmail" name="email" placeholder="Email Address">
           </div>
           
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+            <input type="password" id="loginPassword" name="password" placeholder="Password">
             <button type="button" class="toggle-password" id="togglePassword">
               <i class="fas fa-eye"></i>
             </button>
